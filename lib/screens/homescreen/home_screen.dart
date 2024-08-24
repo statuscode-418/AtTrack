@@ -50,13 +50,16 @@ class _HomeScreenState extends State<HomeScreen> {
     _screens = [
       UserDetailsQrView(user: widget.user),
       const UpcommingMeetingsView(),
-      const AllMeetings(),
+      AllMeetings(
+        user: widget.user,
+      ),
     ];
   }
 
   void _logout() async {
     var shouldLogOut = await showLogOutDialog(context);
     if (shouldLogOut) {
+      // ignore: use_build_context_synchronously
       BlocProvider.of<AuthBloc>(context).add(
         const AuthEventLogout(),
       );
@@ -111,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Icons.event_available_rounded,
               size: 30,
             ),
-            label: 'Past Meetings',
+            label: 'Past Events',
           ),
         ],
         onTap: (value) {

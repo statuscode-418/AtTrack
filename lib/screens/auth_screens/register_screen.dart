@@ -218,6 +218,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       },
                       child: const Text('Already registered, Login here',
                           style: TextStyle(color: Colors.cyan, fontSize: 15)),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text('Register as Administrator',
+                          style: TextStyle(color: Colors.cyan, fontSize: 15)),
                     )
                   ],
                 ),
