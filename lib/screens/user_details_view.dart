@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:attrack/models/user_model.dart';
+import 'package:attrack/services/cloud_storage/image_service.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../components/textbox.dart';
 
 class UserDetailsView extends StatefulWidget {
@@ -23,6 +28,10 @@ class _UserDetailsViewState extends State<UserDetailsView> {
   late final TextEditingController _githubController;
   late final TextEditingController _linkedinController;
   late final TextEditingController _instagramController;
+  late final ImagePicker _picker;
+  File? _imageFile;
+  final ImageService _imageService =
+      ImageService(firebaseStorage: FirebaseStorage.instance);
 
   @override
   void initState() {
@@ -31,6 +40,7 @@ class _UserDetailsViewState extends State<UserDetailsView> {
     _linkedinController = TextEditingController(text: user.linkedin);
     _githubController = TextEditingController(text: user.github);
     _instagramController = TextEditingController(text: user.instagram);
+    _picker = ImagePicker();
     super.initState();
   }
 
@@ -42,6 +52,18 @@ class _UserDetailsViewState extends State<UserDetailsView> {
     _phoneNumberController.dispose();
     _instagramController.dispose();
     super.dispose();
+  }
+
+  Future<void> _pickImage() async {
+    final pickedImage = await _picker.pickImage(
+      source: ImageSource.gallery,
+    );
+
+    setState(() {
+      if (pickedImage != null) {
+        _imageFile = File(pickedImage.path);
+      }
+    });
   }
 
   @override
@@ -56,9 +78,16 @@ class _UserDetailsViewState extends State<UserDetailsView> {
               key: _formKey,
               child: Column(
                 children: [
-                  const CircleAvatar(
-                    radius: 60,
-                    //backgroundImage: AssetImage('assets/images/avatar.png'),
+                  GestureDetector(
+                    onTap: _pickImage,
+                    child: CircleAvatar(
+                      radius: 60,
+                      backgroundImage:
+                          _imageFile != null ? FileImage(_imageFile!) : null,
+                      child: _imageFile == null
+                          ? const Icon(Icons.camera_alt, size: 50)
+                          : null,
+                    ),
                   ),
                   const SizedBox(height: 30),
                   const Text('Please enter your details...',
@@ -143,9 +172,17 @@ class _UserDetailsViewState extends State<UserDetailsView> {
                     height: 20,
                   ),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (!_formKey.currentState!.validate()) {
                         return;
+                      }
+
+                      String? photoUrl;
+                      if (_imageFile != null) {
+                        photoUrl = await _imageService.uploadImageForProfile(
+                          image: _imageFile!,
+                          uid: user.uid,
+                        );
                       }
                       var updatedCred = user.copyWith(
                         name: _nameController.text,
@@ -153,6 +190,7 @@ class _UserDetailsViewState extends State<UserDetailsView> {
                         linkedin: _linkedinController.text,
                         instagram: _instagramController.text,
                         phoneNumber: _phoneNumberController.text,
+                        photoUrl: photoUrl,
                       );
                       widget.onSubmit(updatedCred);
                     },
