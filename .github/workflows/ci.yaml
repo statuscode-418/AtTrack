@@ -1,0 +1,41 @@
+name: AtTrackt
+on:
+  push:
+    branches:
+      - main
+
+      pull_request:
+      branches:
+        -main
+
+      jobs:
+        build:
+          runs-on: ubuntu-latest
+
+        steps:
+          - name: AtTrackt
+            uses: actions/checkout@v2
+
+          - name: Set up flutter
+            uses: subosito/flutter-action@v2
+            with:
+            flutter-version: '3.22.3'
+          
+          - name: Get dependencies
+            run: flutter pub get
+
+          - name: Run Tests
+            run: flutter test
+
+          - name: Build APK
+            run: flutter build apk --release 
+
+          - name: Upload APK file to artifacts
+            uses: actions/upload-artifact@v2
+            with:
+              name: app-release
+              path: build/app/outputs/flutter-apk/app-release.apk
+
+
+
+
