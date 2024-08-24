@@ -1,6 +1,7 @@
 import 'package:attrack/models/user_model.dart';
 import 'package:flutter/material.dart';
 import '../../components/eventcard.dart';
+import '../../models/event_model.dart';
 
 class AllMeetings extends StatelessWidget {
   final UserModel user;
@@ -17,8 +18,8 @@ class AllMeetings extends StatelessWidget {
         children: [
           Positioned.fill(
             child: ListView(
-              children: const [
-                Text(
+              children: [
+                const Text(
                   'Event History',
                   style: TextStyle(
                     fontSize: 30,
@@ -26,24 +27,33 @@ class AllMeetings extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 EventCard(
-                  imageUrl: 'https://via.placeholder.com/100',
-                  heading: 'Diversion',
-                  subheading: '36 hour Hackathon',
-                  date: 'Saturday 04 February',
-                  location: 'IEM Kolkata',
+                  event: EventModel.newEvent(
+                    uid: '1bd',
+                    mid: 'hello',
+                    title: 'Hack4Bengal',
+                    date: DateTime.now(),
+                    city: 'Kolkata',
+                    address: 'kolkata',
+                    latitude: 12,
+                    longitude: 24,
+                    deadline: DateTime.now(),
+                  ),
                 ),
               ],
             ),
           ),
           if (user.isAdmin)
             Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: ElevatedButton(
-                    onPressed: () {}, child: const Text('Create Meeting')))
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text('Create Meeting'),
+              ),
+            )
         ],
       ),
     );

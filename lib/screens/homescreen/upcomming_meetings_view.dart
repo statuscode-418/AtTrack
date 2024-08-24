@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../components/eventcard.dart';
+import '../../models/event_model.dart';
 
 class UpcommingMeetingsView extends StatelessWidget {
   const UpcommingMeetingsView({
@@ -11,7 +12,7 @@ class UpcommingMeetingsView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: ListView(
-        children: const [
+        children: [
           Text(
             'Upcoming Events',
             style: TextStyle(
@@ -21,19 +22,35 @@ class UpcommingMeetingsView extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20),
-          EventCard(
-            imageUrl: 'https://via.placeholder.com/100',
-            heading: 'Status Code 1',
-            subheading: '36 hour Hackathon',
-            date: 'Saturday 24 August',
-            location: 'IISER Kolkata',
-          ),
-          EventCard(
-            imageUrl: 'https://via.placeholder.com/100',
-            heading: 'Hack 4 Bengal',
-            subheading: '36 hour Hackathon',
-            date: 'Thursday 29 August',
-            location: 'JIS Kalyani',
+          Column(
+            children: [
+              EventCard(
+                event: EventModel.newEvent(
+                  uid: '1bd',
+                  mid: 'hello',
+                  title: 'Hack4Bengal',
+                  date: DateTime.now(),
+                  city: 'Kolkata',
+                  address: 'kolkata',
+                  latitude: 12,
+                  longitude: 24,
+                  deadline: DateTime.now(),
+                ),
+              ),
+              EventCard(
+                event: EventModel.newEvent(
+                  uid: '1bd',
+                  mid: 'hello',
+                  title: 'Hack4Bengal',
+                  date: DateTime.now(),
+                  city: 'Kolkata',
+                  address: 'kolkata',
+                  latitude: 12,
+                  longitude: 24,
+                  deadline: DateTime.now(),
+                ),
+              ),
+            ],
           ),
         ],
       ),
