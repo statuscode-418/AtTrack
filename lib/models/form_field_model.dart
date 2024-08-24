@@ -2,14 +2,14 @@ import 'model_constants.dart';
 
 enum FieldType { text, number, option }
 
-class FormField {
+class FormFieldModel {
   final String id;
   final String label;
   final FieldType type;
   final int index;
   final bool required;
 
-  const FormField({
+  const FormFieldModel({
     required this.id,
     required this.label,
     required this.type,
@@ -27,7 +27,7 @@ class FormField {
     };
   }
 
-  factory FormField.fromMap(Map<String, dynamic> map) {
+  factory FormFieldModel.fromMap(Map<String, dynamic> map) {
     var type = FieldType.values[map[ModelConsts.type]];
     switch (type) {
       case FieldType.text:
@@ -40,7 +40,7 @@ class FormField {
   }
 }
 
-class FormTextField extends FormField {
+class FormTextField extends FormFieldModel {
   const FormTextField({
     required super.id,
     required super.label,
@@ -60,7 +60,7 @@ class FormTextField extends FormField {
   }
 }
 
-class NumberField extends FormField {
+class NumberField extends FormFieldModel {
   const NumberField({
     required super.id,
     required super.label,
@@ -80,7 +80,7 @@ class NumberField extends FormField {
   }
 }
 
-class OptionField extends FormField {
+class OptionField extends FormFieldModel {
   final List<String> options;
 
   const OptionField({

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:attrack/screens/create_event_screen/create_event_form.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../components/textbox.dart';
@@ -52,7 +51,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
-
+    if (!mounted) return;
     if (date != null) {
       TimeOfDay? time = await showTimePicker(
         context: context,
@@ -71,23 +70,13 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
   }
 
   Future<void> _pickImage() async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
     if (image != null) {
       setState(() {
         _selectedImage = File(image.path);
       });
-    }
-  }
-
-  void _navigateToNextPage() {
-    if (_formKey.currentState!.validate()) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => CreateEventForm(),
-        ),
-      );
     }
   }
 
@@ -209,9 +198,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                     height: 15,
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      _navigateToNextPage();
-                    },
+                    onPressed: () {},
                     child: const Text(
                       'Next',
                       style: TextStyle(color: Colors.cyan, fontSize: 15),

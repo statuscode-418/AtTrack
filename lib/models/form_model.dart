@@ -6,7 +6,7 @@ class FormModel {
   final String uid;
   final String fid;
 
-  final List<FormField> fields;
+  final List<FormFieldModel> fields;
 
   FormModel({
     required this.eid,
@@ -23,7 +23,7 @@ class FormModel {
     };
   }
 
-  factory FormModel.fromMap(Map<String, dynamic> map, List<FormField> fields) {
+  factory FormModel.fromMap(Map<String, dynamic> map, List<FormFieldModel> fields) {
     return FormModel(
       eid: map[ModelConsts.eid],
       uid: map[ModelConsts.uid],
