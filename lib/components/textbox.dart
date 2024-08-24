@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class TextBox extends StatelessWidget {
   final String label;
   final TextEditingController controller;
@@ -8,8 +9,10 @@ class TextBox extends StatelessWidget {
   final bool enableSuggestions;
   final bool autocorrect;
   final String? Function(String?)? validator;
+  void Function()? onTap;
+  bool? readOnly;
 
-  const TextBox({
+  TextBox({
     super.key,
     required this.label,
     required this.controller,
@@ -18,11 +21,15 @@ class TextBox extends StatelessWidget {
     required this.enableSuggestions,
     required this.autocorrect,
     this.validator,
+    this.onTap,
+    this.readOnly,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTap: onTap,
+      readOnly: readOnly ?? false,
       controller: controller,
       textInputAction: textInputAction,
       keyboardType: keyboardType,
