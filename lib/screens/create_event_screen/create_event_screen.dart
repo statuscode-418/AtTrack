@@ -51,7 +51,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
-    if (!mounted) return;
+
     if (date != null) {
       TimeOfDay? time = await showTimePicker(
         context: context,
@@ -70,8 +70,8 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
   }
 
   Future<void> _pickImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    final ImagePicker _picker = ImagePicker();
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 
     if (image != null) {
       setState(() {
