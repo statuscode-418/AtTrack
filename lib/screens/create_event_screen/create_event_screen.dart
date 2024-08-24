@@ -88,126 +88,128 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Column(
-                    children: [
-                      _selectedImage != null
-                          ? Container(
-                              width: double.infinity,
-                              height: 250,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: FileImage(_selectedImage!),
-                                  fit: BoxFit.cover,
+        child: PageView(
+          children: [
+            SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Column(
+                      children: [
+                        _selectedImage != null
+                            ? Container(
+                                width: double.infinity,
+                                height: 250,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: FileImage(_selectedImage!),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                              ),
-                            )
-                          : GestureDetector(
-                              onTap: _pickImage,
-                              child: Container(
-                                height: 150,
-                                width: 150,
-                                color: Colors.grey[300],
-                                child: const Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.image,
-                                          size: 50, color: Colors.grey),
-                                      Text('Tap to upload image',
-                                          style: TextStyle(color: Colors.grey)),
-                                    ],
+                              )
+                            : GestureDetector(
+                                onTap: _pickImage,
+                                child: Container(
+                                  height: 150,
+                                  width: 150,
+                                  color: Colors.grey[300],
+                                  child: const Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.image,
+                                            size: 50, color: Colors.grey),
+                                        Text('Tap to upload image',
+                                            style: TextStyle(color: Colors.grey)),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                      const SizedBox(height: 20),
-                    ],
-                  ),
-                  TextBox(
-                    controller: _titleController,
-                    label: 'Title',
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.text,
-                    enableSuggestions: true,
-                    autocorrect: true,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextBox(
-                    controller: _descriptionController,
-                    label: 'Description',
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.text,
-                    enableSuggestions: true,
-                    autocorrect: true,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextBox(
-                    controller: _websiteController,
-                    label: 'Website',
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.text,
-                    enableSuggestions: true,
-                    autocorrect: true,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextBox(
-                    controller: _addressController,
-                    label: 'Address',
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.text,
-                    enableSuggestions: true,
-                    autocorrect: true,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextBox(
-                    controller: _cityController,
-                    label: 'City',
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.text,
-                    enableSuggestions: true,
-                    autocorrect: true,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextBox(
-                    controller: _dateTimeController,
-                    label: 'Event Date & Time',
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.datetime,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    readOnly: true,
-                    onTap: _pickDateTime,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text(
-                      'Next',
-                      style: TextStyle(color: Colors.cyan, fontSize: 15),
+                        const SizedBox(height: 20),
+                      ],
                     ),
-                  ),
-                ],
+                    TextBox(
+                      controller: _titleController,
+                      label: 'Title',
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.text,
+                      enableSuggestions: true,
+                      autocorrect: true,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextBox(
+                      controller: _descriptionController,
+                      label: 'Description',
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.text,
+                      enableSuggestions: true,
+                      autocorrect: true,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextBox(
+                      controller: _websiteController,
+                      label: 'Website',
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.text,
+                      enableSuggestions: true,
+                      autocorrect: true,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextBox(
+                      controller: _addressController,
+                      label: 'Address',
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.text,
+                      enableSuggestions: true,
+                      autocorrect: true,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextBox(
+                      controller: _cityController,
+                      label: 'City',
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.text,
+                      enableSuggestions: true,
+                      autocorrect: true,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextBox(
+                      controller: _dateTimeController,
+                      label: 'Event Date & Time',
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.datetime,
+                      enableSuggestions: false,
+                      autocorrect: false,
+                      readOnly: true,
+                      onTap: _pickDateTime,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'Next',
+                        style: TextStyle(color: Colors.cyan, fontSize: 15),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
