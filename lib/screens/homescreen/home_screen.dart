@@ -8,7 +8,7 @@ import 'package:attrack/screens/homescreen/user_details_qr_view.dart';
 import 'package:attrack/services/firestore_storage/db_model.dart';
 import 'package:attrack/utils/dialog/logout_dialog.dart';
 import 'package:attrack/utils/dialog/user_settings_dialog.dart';
-
+import 'package:attrack/screens/homescreen/notification_screen.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -144,7 +144,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.white,
                 iconSize: 35,
                 onPressed: () {
-                  // Nabajit banie dis
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NotificationScreen(),
+                  ),
+                );
                 },
               ),
               const SizedBox(width: 10),
