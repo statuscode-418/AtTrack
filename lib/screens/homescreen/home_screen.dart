@@ -3,12 +3,12 @@ import 'package:attrack/bloc/auth_bloc/events/auth_event_logout.dart';
 import 'package:attrack/bloc/auth_bloc/events/auth_event_show_update_user_details.dart';
 import 'package:attrack/models/user_model.dart';
 import 'package:attrack/screens/homescreen/all_meetings.dart';
+import 'package:attrack/screens/homescreen/notification-screen.dart';
 import 'package:attrack/screens/homescreen/upcomming_meetings_view.dart';
 import 'package:attrack/screens/homescreen/user_details_qr_view.dart';
 import 'package:attrack/services/firestore_storage/db_model.dart';
 import 'package:attrack/utils/dialog/logout_dialog.dart';
 import 'package:attrack/utils/dialog/user_settings_dialog.dart';
-import 'package:attrack/screens/homescreen/notification_screen.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -145,11 +145,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 iconSize: 35,
                 onPressed: () {
                   Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NotificationScreen(),
-                  ),
-                );
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NotificationScreen(),
+                    ),
+                  );
                 },
               ),
               const SizedBox(width: 10),
