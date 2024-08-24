@@ -157,9 +157,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: () {
                   _showSettingsDialog();
                 },
-                child: const CircleAvatar(
+                child: CircleAvatar(
                   radius: 18,
-                  //backgroundImage: const AssetImage('assets/images/avatar.png'),
+                  backgroundImage: widget.user.photoUrl != null
+                      ? NetworkImage(widget.user.photoUrl!)
+                      : null,
+                  child: widget.user.photoUrl == null ? const Text('A') : null,
                 ),
               ),
             ],
