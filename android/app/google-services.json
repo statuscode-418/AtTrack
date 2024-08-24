@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "138006115795",
+    "project_id": "eentrack-version-2",
+    "storage_bucket": "eentrack-version-2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138006115795:android:2cd042e1608c6e38d3ab26",
+        "android_client_info": {
+          "package_name": "com.statuscode418.attrack"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA78xC4kPF4HzcqAmbxQraSphVPxcZO-Hk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138006115795:android:3dc335016ca2daecd3ab26",
+        "android_client_info": {
+          "package_name": "com.statuscode418.attrack"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA78xC4kPF4HzcqAmbxQraSphVPxcZO-Hk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
