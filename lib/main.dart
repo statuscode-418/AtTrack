@@ -14,7 +14,7 @@ import 'package:attrack/bloc/auth_bloc/states/auth_state_show_user_details_form.
 import 'package:attrack/bloc/auth_bloc/states/auth_state_uninitialized.dart';
 import 'package:attrack/screens/homescreen/home_screen.dart';
 import 'package:attrack/screens/shared/loading_screen.dart';
-import 'package:attrack/screens/user_details_view.dart';
+import 'package:attrack/screens/userdetails_screen/user_details_view.dart';
 
 import 'package:attrack/services/auth/firebase_auth_provider.dart';
 import 'package:attrack/services/firestore_storage/firestore_db.dart';
@@ -32,15 +32,15 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.dark(),
+        theme: ThemeData.dark(),
         home: BlocProvider<AuthBloc>(
-      create: (context) => AuthBloc(
-        context,
-        FirebaseAuthProvider(),
-        FirestoreDB(),
-      ),
-      child: const AuthBlocHandler(),
-    ));
+          create: (context) => AuthBloc(
+            context,
+            FirebaseAuthProvider(),
+            FirestoreDB(),
+          ),
+          child: const AuthBlocHandler(),
+        ));
   }
 }
 
