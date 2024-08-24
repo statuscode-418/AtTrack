@@ -1,6 +1,8 @@
 import 'package:attrack/models/event_model.dart';
+import 'package:attrack/models/form_field_answer.dart';
 import 'package:attrack/models/form_field_model.dart';
 import 'package:attrack/models/form_model.dart';
+import 'package:attrack/models/form_submission.dart';
 import 'package:attrack/models/model_constants.dart';
 import 'package:attrack/models/user_model.dart';
 import 'package:attrack/services/firestore_storage/db_constants.dart';
@@ -277,6 +279,133 @@ class FirestoreDB implements DBModel {
     } on FirebaseException catch (e) {
       throw FirestoreDBExceptions(
         message: 'Could not update form',
+        details: e.toString(),
+      );
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> createSubmission(FormSubmission submission) async {
+    try {
+      await _db
+          .collection(DBConstants.formSubmissions)
+          .doc(submission.sid)
+          .set(submission.toMap());
+      var tasks = submission.answers.map((answer) async {
+        await _db
+            .collection(DBConstants.formSubmissions)
+            .doc(submission.sid)
+            .collection(DBConstants.formAnswers)
+            .doc(answer.id)
+            .set(answer.toMap());
+      });
+      await Future.wait(tasks);
+    } on FirebaseException catch (e) {
+      throw FirestoreDBExceptions(
+        message: 'Could not create submission',
+        details: e.toString(),
+      );
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> deleteSubmission(String submissionId) async {
+    try {
+      var answers = await _db
+          .collection(DBConstants.formSubmissions)
+          .doc(submissionId)
+          .collection(DBConstants.formAnswers)
+          .get();
+      var tasks = answers.docs.map((answer) async {
+        await answer.reference.delete();
+      });
+      await Future.wait(tasks);
+      await _db
+          .collection(DBConstants.formSubmissions)
+          .doc(submissionId)
+          .delete();
+    } on FirebaseException catch (e) {
+      throw FirestoreDBExceptions(
+        message: 'Could not delete submission',
+        details: e.toString(),
+      );
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
+  Future<FormSubmission?> getSubmission(String submissionId) async {
+    try {
+      var formDoc = await _db
+          .collection(DBConstants.formSubmissions)
+          .doc(submissionId)
+          .get();
+
+      if (!formDoc.exists) {
+        return null;
+      }
+
+      var answers = await _db
+          .collection(DBConstants.formSubmissions)
+          .doc(submissionId)
+          .collection(DBConstants.formAnswers)
+          .get();
+
+      var formAnswers = answers.docs.map((answer) {
+        return FieldAnswer.fromMap(answer.data());
+      }).toList();
+
+      return FormSubmission.fromMap(formDoc.data()!, formAnswers);
+    } on FirebaseException {
+      throw const FirestoreDBExceptions(
+        message: 'Could not get submission',
+      );
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
+  Stream<List<FormSubmission>> getSubmissions(String eid) {
+    try {
+      return _db
+          .collection(DBConstants.formSubmissions)
+          .where(ModelConsts.eid, isEqualTo: eid)
+          .snapshots()
+          .map((snapshot) {
+        return snapshot.docs.map((doc) {
+          return FormSubmission.fromMap(doc.data(), []);
+        }).toList();
+      });
+    } on FirebaseException catch (e) {
+      throw FirestoreDBExceptions(
+        message: 'Could not get submissions',
+        details: e.toString(),
+      );
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
+  Future<List<FieldAnswer>> getFormAnswers(String sid) async {
+    try {
+      var answers = await _db
+          .collection(DBConstants.formSubmissions)
+          .doc(sid)
+          .collection(DBConstants.formAnswers)
+          .get();
+      return answers.docs.map((answer) {
+        return FieldAnswer.fromMap(answer.data());
+      }).toList();
+    } on FirebaseException catch (e) {
+      throw FirestoreDBExceptions(
+        message: 'Could not get form answers',
         details: e.toString(),
       );
     } on Exception catch (e) {

@@ -1,5 +1,7 @@
 import 'package:attrack/models/event_model.dart';
+import 'package:attrack/models/form_field_answer.dart';
 import 'package:attrack/models/form_model.dart';
+import 'package:attrack/models/form_submission.dart';
 import 'package:attrack/models/user_model.dart';
 
 abstract class DBModel {
@@ -34,4 +36,14 @@ abstract class DBModel {
   Future<FormModel?> getForm(String formId);
 
   Future<void> updateForm(FormModel form);
+
+  Future<void> createSubmission(FormSubmission submission);
+
+  Future<void> deleteSubmission(String submissionId);
+
+  Future<FormSubmission?> getSubmission(String submissionId);
+
+  Stream<List<FormSubmission>> getSubmissions(String eid);
+
+  Future<List<FieldAnswer>> getFormAnswers(String sid);
 }
