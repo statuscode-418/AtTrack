@@ -9,6 +9,8 @@ class NotificationScreen extends StatelessWidget {
     "Your ticket has been confirmed.",
   ];
 
+  NotificationScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
