@@ -1,6 +1,6 @@
-import 'package:attrack/models/model_constants.dart';
 
 import 'form_field_answer.dart';
+import 'model_constants.dart';
 
 class FormSubmission {
   final String sid;
@@ -9,6 +9,7 @@ class FormSubmission {
   final String eid;
 
   final DateTime submittedAt;
+  final bool accepted;
   final List<FieldAnswer> answers;
 
   const FormSubmission({
@@ -18,6 +19,7 @@ class FormSubmission {
     required this.eid,
     required this.submittedAt,
     required this.answers,
+    this.accepted = false,
   });
 
   Map<String, dynamic> toMap() {
@@ -27,6 +29,7 @@ class FormSubmission {
       ModelConsts.uniqueCode: userCode,
       ModelConsts.eid: eid,
       ModelConsts.submittedAt: submittedAt.toIso8601String(),
+      ModelConsts.accepted: accepted,
     };
   }
 
@@ -38,6 +41,7 @@ class FormSubmission {
       userCode: map[ModelConsts.uniqueCode],
       eid: map[ModelConsts.eid],
       submittedAt: DateTime.parse(map[ModelConsts.submittedAt]),
+      accepted: map[ModelConsts.accepted],
       answers: answers,
     );
   }

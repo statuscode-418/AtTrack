@@ -37,4 +37,10 @@ class ModelConsts {
 
   static const sid = 'sid';
   static const submittedAt = 'submitted_at';
+  static const accepted = 'accepted';
+
+  static const checkpointId = 'checkpoint_id';
+  static const eventId = 'event_id';
+  static const start = 'start';
+  static const end = 'end';
 }

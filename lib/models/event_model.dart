@@ -1,4 +1,5 @@
-import 'package:attrack/models/model_constants.dart';
+
+import 'model_constants.dart';
 
 class EventModel {
   final String eid;

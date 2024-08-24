@@ -1,5 +1,5 @@
-import 'package:attrack/models/model_constants.dart';
-import 'package:attrack/models/app_model.dart';
+import 'app_model.dart';
+import 'model_constants.dart';
 
 class UserModel implements AppModel {
   final String uid;

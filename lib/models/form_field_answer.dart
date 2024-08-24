@@ -31,4 +31,15 @@ class FieldAnswer extends FormField {
       answer: map[ModelConsts.answer],
     );
   }
+
+  factory FieldAnswer.fromField(FormField field, String answer) {
+    return FieldAnswer(
+      id: field.id,
+      label: field.label,
+      type: field.type,
+      index: field.index,
+      required: field.required,
+      answer: answer,
+    );
+  }
 }
