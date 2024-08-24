@@ -18,13 +18,27 @@ Future<SettingOptions?> showSettingsDialog(
         title: Text(
           user.name,
           textAlign: TextAlign.center,
+          style: TextStyle(
+                color: Color(0xFF73FBFD),
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+              ),
         ),
         children: [
+          CircleAvatar(
+            radius: 60,
+            //backgroundImage: ,
+          ),
+          SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
               user.email,
               textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xFF73FBFD),
+                fontSize: 18,
+              ),
             ),
           ),
           const Divider(),
@@ -35,6 +49,10 @@ Future<SettingOptions?> showSettingsDialog(
             child: const Text(
               "Edit Profile",
               textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+              ),
             ),
           ),
           SimpleDialogOption(
@@ -44,12 +62,20 @@ Future<SettingOptions?> showSettingsDialog(
             child: const Text(
               "LogOut",
               textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+              ),
             ),
           ),
           SimpleDialogOption(
             child: const Text(
               "Close",
               textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+              ),
             ),
             onPressed: () {
               Navigator.pop(context);
