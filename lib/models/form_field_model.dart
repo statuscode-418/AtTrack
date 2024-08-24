@@ -31,7 +31,7 @@ class FormField {
     var type = FieldType.values[map[ModelConsts.type]];
     switch (type) {
       case FieldType.text:
-        return TextField.fromMap(map);
+        return FormTextField.fromMap(map);
       case FieldType.number:
         return NumberField.fromMap(map);
       case FieldType.option:
@@ -40,8 +40,8 @@ class FormField {
   }
 }
 
-class TextField extends FormField {
-  const TextField({
+class FormTextField extends FormField {
+  const FormTextField({
     required super.id,
     required super.label,
     required super.required,
@@ -50,8 +50,8 @@ class TextField extends FormField {
           type: FieldType.text,
         );
 
-  factory TextField.fromMap(Map<String, dynamic> map) {
-    return TextField(
+  factory FormTextField.fromMap(Map<String, dynamic> map) {
+    return FormTextField(
       id: map[ModelConsts.id],
       label: map[ModelConsts.label],
       required: map[ModelConsts.isRequired],

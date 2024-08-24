@@ -42,4 +42,15 @@ class FieldAnswer extends FormField {
       answer: answer,
     );
   }
+
+  FieldAnswer copyWith({String? answer}) {
+    return FieldAnswer(
+      id: id,
+      label: label,
+      type: type,
+      index: index,
+      required: required,
+      answer: answer ?? this.answer,
+    );
+  }
 }
