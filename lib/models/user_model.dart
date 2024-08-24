@@ -12,6 +12,7 @@ class UserModel implements AppModel {
   final String instagram;
   final String phoneNumber;
   final List<String> eventIds;
+  final bool isAdmin;
 
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -29,6 +30,7 @@ class UserModel implements AppModel {
     required this.updatedAt,
     this.eventIds = const [],
     this.photoUrl,
+    this.isAdmin = false,
   });
 
   UserModel.newUser({
@@ -43,6 +45,7 @@ class UserModel implements AppModel {
         github = '',
         createdAt = DateTime.now(),
         updatedAt = DateTime.now(),
+        isAdmin = false,
         eventIds = const [];
 
   UserModel copyWith({
@@ -86,6 +89,7 @@ class UserModel implements AppModel {
       ModelConsts.createdAt: createdAt.toIso8601String(),
       ModelConsts.updatedAt: updatedAt.toIso8601String(),
       ModelConsts.eventIds: eventIds,
+      ModelConsts.isAdmin: isAdmin,
     };
   }
 
@@ -103,6 +107,7 @@ class UserModel implements AppModel {
       createdAt: DateTime.parse(map[ModelConsts.createdAt]),
       updatedAt: DateTime.parse(map[ModelConsts.updatedAt]),
       eventIds: List<String>.from(map[ModelConsts.eventIds] ?? []),
+      isAdmin: map[ModelConsts.isAdmin] ?? false,
     );
   }
 }

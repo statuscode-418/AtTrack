@@ -1,3 +1,5 @@
+import 'package:attrack/models/checkpoint_model.dart';
+import 'package:attrack/models/checkpoint_stamp.dart';
 import 'package:attrack/models/event_model.dart';
 import 'package:attrack/models/form_field_answer.dart';
 import 'package:attrack/models/form_field_model.dart';
@@ -406,6 +408,204 @@ class FirestoreDB implements DBModel {
     } on FirebaseException catch (e) {
       throw FirestoreDBExceptions(
         message: 'Could not get form answers',
+        details: e.toString(),
+      );
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> createCheckpoint(CheckpointModel checkpoint) async {
+    try {
+      await _db
+          .collection(DBConstants.checkpoints)
+          .doc(checkpoint.checkpointId)
+          .set(checkpoint.toMap());
+    } on FirebaseException catch (e) {
+      throw FirestoreDBExceptions(
+        message: 'Could not create checkpoint',
+        details: e.toString(),
+      );
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> deleteAllCheckpoints(String eventId) async {
+    try {
+      var checkpoints = await _db
+          .collection(DBConstants.checkpoints)
+          .where(ModelConsts.eventId, isEqualTo: eventId)
+          .get();
+      var tasks = checkpoints.docs.map((checkpoint) async {
+        await checkpoint.reference.delete();
+      });
+      await Future.wait(tasks);
+    } on FirebaseException catch (e) {
+      throw FirestoreDBExceptions(
+        message: 'Could not delete checkpoints',
+        details: e.toString(),
+      );
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> deleteCheckpoint(String checkpointId) async {
+    try {
+      await _db.collection(DBConstants.checkpoints).doc(checkpointId).delete();
+    } on FirebaseException catch (e) {
+      throw FirestoreDBExceptions(
+        message: 'Could not delete checkpoint',
+        details: e.toString(),
+      );
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
+  Future<CheckpointModel?> getCheckpoint(String checkpointId) async {
+    try {
+      var checkpoint =
+          await _db.collection(DBConstants.checkpoints).doc(checkpointId).get();
+      if (checkpoint.exists) {
+        return CheckpointModel.fromMap(
+            checkpoint.data() as Map<String, dynamic>);
+      }
+      return null;
+    } on FirebaseException {
+      throw const FirestoreDBExceptions(
+        message: 'Could not get checkpoint',
+      );
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
+  Stream<List<CheckpointModel>> getCheckpoints(String eventId) {
+    try {
+      return _db
+          .collection(DBConstants.checkpoints)
+          .where(ModelConsts.eventId, isEqualTo: eventId)
+          .snapshots()
+          .map((snapshot) {
+        return snapshot.docs
+            .map((doc) => CheckpointModel.fromMap(doc.data()))
+            .toList();
+      });
+    } on FirebaseException catch (e) {
+      throw FirestoreDBExceptions(
+        message: 'Could not get checkpoints',
+        details: e.toString(),
+      );
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> updateCheckpoint(CheckpointModel checkpoint) async {
+    try {
+      await _db
+          .collection(DBConstants.checkpoints)
+          .doc(checkpoint.checkpointId)
+          .update(checkpoint.toMap());
+    } on FirebaseException catch (e) {
+      throw FirestoreDBExceptions(
+        message: 'Could not update checkpoint',
+        details: e.toString(),
+      );
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> createCheckpointStamp(CheckpointStamp stamp) async {
+    try {
+      await _db
+          .collection(DBConstants.checkpointStamps)
+          .doc(stamp.stampId)
+          .set(stamp.toMap());
+    } on FirebaseException catch (e) {
+      throw FirestoreDBExceptions(
+        message: 'Could not create checkpoint stamp',
+        details: e.toString(),
+      );
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> deleteCheckpointStamp(String stampId) async {
+    try {
+      await _db.collection(DBConstants.checkpointStamps).doc(stampId).delete();
+    } on FirebaseException catch (e) {
+      throw FirestoreDBExceptions(
+        message: 'Could not delete checkpoint stamp',
+        details: e.toString(),
+      );
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
+  Future<CheckpointStamp?> getCheckpointStamp(String stampId) async {
+    try {
+      var stamp =
+          await _db.collection(DBConstants.checkpointStamps).doc(stampId).get();
+      if (stamp.exists) {
+        return CheckpointStamp.fromMap(stamp.data() as Map<String, dynamic>);
+      }
+      return null;
+    } on FirebaseException {
+      throw const FirestoreDBExceptions(
+        message: 'Could not get checkpoint stamp',
+      );
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
+  Stream<List<CheckpointStamp>> getCheckpointStamps(String eventId) {
+    try {
+      return _db
+          .collection(DBConstants.checkpointStamps)
+          .where(ModelConsts.eventId, isEqualTo: eventId)
+          .snapshots()
+          .map((snapshot) {
+        return snapshot.docs
+            .map((doc) => CheckpointStamp.fromMap(doc.data()))
+            .toList();
+      });
+    } on FirebaseException catch (e) {
+      throw FirestoreDBExceptions(
+        message: 'Could not get checkpoint stamps',
+        details: e.toString(),
+      );
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> updateCheckpointStamp(CheckpointStamp stamp) async {
+    try {
+      await _db
+          .collection(DBConstants.checkpointStamps)
+          .doc(stamp.stampId)
+          .update(stamp.toMap());
+    } on FirebaseException catch (e) {
+      throw FirestoreDBExceptions(
+        message: 'Could not update checkpoint stamp',
         details: e.toString(),
       );
     } on Exception catch (e) {

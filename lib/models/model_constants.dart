@@ -12,6 +12,7 @@ class ModelConsts {
   static const createdAt = 'created_at';
   static const updatedAt = 'updated_at';
   static const eventIds = 'event_ids';
+  static const isAdmin = 'is_admin';
 
   static const eid = 'eid';
   static const title = 'title';
@@ -43,4 +44,7 @@ class ModelConsts {
   static const eventId = 'event_id';
   static const start = 'start';
   static const end = 'end';
+
+  static const participantCode = 'participant_code';
+  static const stampId = 'stamp_id';
 }

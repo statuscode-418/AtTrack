@@ -1,3 +1,5 @@
+import 'package:attrack/models/checkpoint_model.dart';
+import 'package:attrack/models/checkpoint_stamp.dart';
 import 'package:attrack/models/event_model.dart';
 import 'package:attrack/models/form_field_answer.dart';
 import 'package:attrack/models/form_model.dart';
@@ -46,4 +48,29 @@ abstract class DBModel {
   Stream<List<FormSubmission>> getSubmissions(String eid);
 
   Future<List<FieldAnswer>> getFormAnswers(String sid);
+
+  Future<void> createCheckpoint(CheckpointModel checkpoint);
+
+  Future<void> deleteCheckpoint(String checkpointId);
+
+  Future<CheckpointModel?> getCheckpoint(String checkpointId);
+
+  Future<void> updateCheckpoint(CheckpointModel checkpoint);
+
+  Stream<List<CheckpointModel>> getCheckpoints(String eventId);
+
+  Future<void> createCheckpointStamp(CheckpointStamp stamp);
+
+  Future<void> deleteCheckpointStamp(String stampId);
+
+  Future<CheckpointStamp?> getCheckpointStamp(String stampId);
+
+  Stream<List<CheckpointStamp>> getCheckpointStamps(String eventId);
+
+  Future<void> updateCheckpointStamp(CheckpointStamp stamp);
+
+  Future<void> deleteAllCheckpoints(String eventId);
+
+
+
 }
