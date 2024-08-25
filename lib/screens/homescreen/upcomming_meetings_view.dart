@@ -13,7 +13,7 @@ class UpcommingMeetingsView extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: ListView(
         children: [
-          Text(
+          const Text(
             'Upcoming Events',
             style: TextStyle(
               fontSize: 30,
@@ -21,7 +21,7 @@ class UpcommingMeetingsView extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Column(
             children: [
               EventCard(

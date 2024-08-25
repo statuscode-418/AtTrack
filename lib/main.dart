@@ -63,9 +63,7 @@ class AuthBlocHandler extends StatelessWidget {
       builder: (context, state) {
         if (state is AuthStateUninitialized) {
           context.read<AuthBloc>().add(const AuthEventInitialize());
-          LoadingDialog().show(
-              context: context,
-              text: state.message?.message ?? 'Please wait a moment');
+          return const LoadingScreen();
         }
         if (state is AuthStateLoggedIn) {
           // Need to test it later
