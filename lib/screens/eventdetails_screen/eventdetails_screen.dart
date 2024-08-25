@@ -122,6 +122,25 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   widget.event.description ?? '',
                   style: const TextStyle(fontSize: 16.0),
                 ),
+                const SizedBox(height: 16.0),
+                const Wrap(
+                  spacing: 8.0, // gap between adjacent chips
+                  runSpacing: 4.0, // gap between lines
+                  children: [
+                    Chip(
+                      label: Text('Entry'),
+                    ),
+                    Chip(
+                      label: Text('Lunch'),
+                    ),
+                    Chip(
+                      label: Text('Dinner'),
+                    ),
+                    Chip(
+                      label: Text('Exit'),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 80.0),
                 if (widget.user.isAdmin && widget.user.uid == widget.event.uid)
                   Container(
@@ -244,7 +263,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         const SizedBox(height: 8.0),
                         Center(
                           child: ElevatedButton(
-                            onPressed:  _joinEvent,
+                            onPressed: _joinEvent,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.cyan,
                             ),
