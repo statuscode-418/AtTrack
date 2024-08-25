@@ -1,14 +1,17 @@
 import 'package:attrack/models/event_model.dart';
+import 'package:attrack/models/user_model.dart';
 import 'package:attrack/screens/eventdetails_screen/eventdetails_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class EventCard extends StatelessWidget {
   final EventModel event;
+  final UserModel user;
 
   const EventCard({
     super.key,
     required this.event,
+    required this.user,
   });
 
   @override
@@ -16,12 +19,13 @@ class EventCard extends StatelessWidget {
     var format = DateFormat('dd-MM-yyyy');
     return GestureDetector(
       onTap: (){
-        EventDetailsScreen(event: event);
+        EventDetailsScreen(event: event, user: user);
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => EventDetailsScreen(
               event: event,
+              user: user,
             ),
           ),
         );

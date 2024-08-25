@@ -1,12 +1,15 @@
 import 'package:attrack/models/event_model.dart';
+import 'package:attrack/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class EventDetailsScreen extends StatelessWidget {
   final EventModel event;
+  final UserModel user;
 
   const EventDetailsScreen({
     super.key,
     required this.event,
+    required this.user,
   });
 
   @override
@@ -91,7 +94,140 @@ class EventDetailsScreen extends StatelessWidget {
                   event.description ?? '',
                   style: const TextStyle(fontSize: 16.0),
                 ),
-                const SizedBox(height: 80.0), // Add some space at the bottom
+                const SizedBox(height: 80.0),
+                if (!user.isAdmin)
+                  Container(
+                    color: const Color(0xFF322C2C),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Registration',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 8.0),
+                        const Text(
+                          'Approval Required',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8.0),
+                        const Text(
+                          'Your registration is subject to approval by the host.',
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const Divider(
+                          color: Colors.white,
+                          thickness: 1.0,
+                        ),
+                        const Text(
+                          'Welcome! To join the event, please register below',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8.0),
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // Add your onPressed code here!
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.cyan,
+                            ),
+                            child: const Text(
+                              'Request to Join',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (user.isAdmin)
+                  Container(
+                    color: const Color(0xFF322C2C),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Approval',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 8.0),
+                        const Text(
+                          'Approval Required',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8.0),
+                        const Text(
+                          'Your registration is subject to approval by the host.',
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const Divider(
+                          color: Colors.white,
+                          thickness: 1.0,
+                        ),
+                        const Text(
+                          'Welcome! To join the event, please register below',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8.0),
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // Add your onPressed code here!
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.cyan,
+                            ),
+                            child: const Text(
+                              'Approve Registration',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                const SizedBox(height: 80.0),
               ],
             ),
           ),

@@ -1,10 +1,13 @@
+import 'package:attrack/models/user_model.dart';
 import 'package:flutter/material.dart';
 import '../../components/eventcard.dart';
 import '../../models/event_model.dart';
 
 class UpcommingMeetingsView extends StatelessWidget {
-  const UpcommingMeetingsView({
+  UserModel user;
+  UpcommingMeetingsView({
     super.key,
+    required this.user,
   });
 
   @override
@@ -35,7 +38,7 @@ class UpcommingMeetingsView extends StatelessWidget {
                   latitude: 12,
                   longitude: 24,
                   deadline: DateTime.now(),
-                ),
+                ), user: user, 
               ),
               EventCard(
                 event: EventModel.newEvent(
@@ -48,7 +51,7 @@ class UpcommingMeetingsView extends StatelessWidget {
                   latitude: 12,
                   longitude: 24,
                   deadline: DateTime.now(),
-                ),
+                ), user: user, 
               ),
             ],
           ),

@@ -34,6 +34,7 @@ class AllMeetings extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 EventCard(
+                  user: user,
                   event: EventModel.newEvent(
                     uid: '1bd',
                     mid: 'hello',
@@ -45,7 +46,7 @@ class AllMeetings extends StatelessWidget {
                     longitude: 24,
                     deadline: DateTime.now(),
                   ),
-                ),
+                ), 
               ],
             ),
           ),
