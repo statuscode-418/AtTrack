@@ -25,18 +25,14 @@ class FormFieldCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              formField.type == FieldType.number
-                  ? 'Number'
-                  : 'Text',
+              formField.type == FieldType.number ? 'Number' : 'Text',
               style: const TextStyle(
                 fontSize: 16,
               ),
             ),
             const SizedBox(height: 8),
             Text(
-              formField.required
-                  ? 'Required'
-                  : 'Optional',
+              formField.required ? 'Required' : 'Optional',
               style: const TextStyle(
                 fontSize: 16,
               ),
