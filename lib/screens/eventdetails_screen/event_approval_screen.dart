@@ -39,16 +39,21 @@ class _EventApprovalScreenState extends State<EventApprovalScreen> {
                   child: Text('No events found'),
                 );
               } else {
-                return ListView.builder(itemBuilder: (context, index) {
-                  final submision = snapshot.data![index];
-                  return ListTile(
-                    title: Text(submision.sid),
-                    trailing: ElevatedButton(
-                      onPressed: () {},
-                      child: const Text('Approve'),
-                    ),
-                  );
-                });
+                return ListView.builder(
+                  itemBuilder: (context, index) {
+                    final submision = snapshot.data![index];
+                    return ListTile(
+                      title: Text(submision.sid),
+                      trailing: !submision.accepted
+                          ? ElevatedButton(
+                              onPressed: () {},
+                              child: const Text('Approve'),
+                            )
+                          : const Text('Approved'),
+                    );
+                  },
+                  itemCount: snapshot.data!.length,
+                );
               }
             }));
   }
