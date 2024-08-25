@@ -1,7 +1,7 @@
 import 'form_field_model.dart';
 import 'model_constants.dart';
 
-class FieldAnswer extends FormField {
+class FieldAnswer extends FormFieldModel {
   final String answer;
 
   FieldAnswer({
@@ -32,7 +32,7 @@ class FieldAnswer extends FormField {
     );
   }
 
-  factory FieldAnswer.fromField(FormField field, String answer) {
+  factory FieldAnswer.fromField(FormFieldModel field, String answer) {
     return FieldAnswer(
       id: field.id,
       label: field.label,
@@ -40,6 +40,17 @@ class FieldAnswer extends FormField {
       index: field.index,
       required: field.required,
       answer: answer,
+    );
+  }
+
+  FieldAnswer copyWith({String? answer}) {
+    return FieldAnswer(
+      id: id,
+      label: label,
+      type: type,
+      index: index,
+      required: required,
+      answer: answer ?? this.answer,
     );
   }
 }

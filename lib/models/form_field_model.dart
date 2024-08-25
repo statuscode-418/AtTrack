@@ -2,14 +2,14 @@ import 'model_constants.dart';
 
 enum FieldType { text, number, option }
 
-class FormField {
+class FormFieldModel {
   final String id;
   final String label;
   final FieldType type;
   final int index;
   final bool required;
 
-  const FormField({
+  const FormFieldModel({
     required this.id,
     required this.label,
     required this.type,
@@ -27,11 +27,11 @@ class FormField {
     };
   }
 
-  factory FormField.fromMap(Map<String, dynamic> map) {
+  factory FormFieldModel.fromMap(Map<String, dynamic> map) {
     var type = FieldType.values[map[ModelConsts.type]];
     switch (type) {
       case FieldType.text:
-        return TextField.fromMap(map);
+        return FormTextField.fromMap(map);
       case FieldType.number:
         return NumberField.fromMap(map);
       case FieldType.option:
@@ -40,8 +40,8 @@ class FormField {
   }
 }
 
-class TextField extends FormField {
-  const TextField({
+class FormTextField extends FormFieldModel {
+  const FormTextField({
     required super.id,
     required super.label,
     required super.required,
@@ -50,8 +50,8 @@ class TextField extends FormField {
           type: FieldType.text,
         );
 
-  factory TextField.fromMap(Map<String, dynamic> map) {
-    return TextField(
+  factory FormTextField.fromMap(Map<String, dynamic> map) {
+    return FormTextField(
       id: map[ModelConsts.id],
       label: map[ModelConsts.label],
       required: map[ModelConsts.isRequired],
@@ -60,7 +60,7 @@ class TextField extends FormField {
   }
 }
 
-class NumberField extends FormField {
+class NumberField extends FormFieldModel {
   const NumberField({
     required super.id,
     required super.label,
@@ -80,7 +80,7 @@ class NumberField extends FormField {
   }
 }
 
-class OptionField extends FormField {
+class OptionField extends FormFieldModel {
   final List<String> options;
 
   const OptionField({

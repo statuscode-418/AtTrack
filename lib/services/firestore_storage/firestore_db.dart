@@ -247,7 +247,7 @@ class FirestoreDB implements DBModel {
       var fields =
           await fieldCollection.where(ModelConsts.fid, isEqualTo: formId).get();
       var formFields = fields.docs.map((field) {
-        return FormField.fromMap(field.data() as Map<String, dynamic>);
+        return FormFieldModel.fromMap(field.data() as Map<String, dynamic>);
       }).toList();
       var form = await formCollection.doc(formId).get();
       if (form.exists) {

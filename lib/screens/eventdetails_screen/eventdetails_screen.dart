@@ -82,8 +82,8 @@ class EventDetailsScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16.0),
-                Text('Description',
-                    style: const TextStyle(
+                const Text('Description',
+                    style: TextStyle(
                         fontSize: 30.0,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF73FBFD))),
@@ -95,13 +95,12 @@ class EventDetailsScreen extends StatelessWidget {
               ],
             ),
           ),
-
           Positioned(
             bottom: 0,
             left: 0,
             right: 0,
             child: Container(
-              color: Color(0xFF322C2C),
+              color: const Color(0xFF322C2C),
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
                 enableSuggestions: false,
