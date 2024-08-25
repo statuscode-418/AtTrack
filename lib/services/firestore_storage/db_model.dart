@@ -42,6 +42,8 @@ abstract class DBModel {
 
   Future<void> createSubmission(FormSubmission submission);
 
+  Future<void> updateSubmission(FormSubmission submission);
+
   Future<void> deleteSubmission(String submissionId);
 
   Future<FormSubmission?> getSubmission(String submissionId);
@@ -73,7 +75,4 @@ abstract class DBModel {
   Future<void> updateCheckpointStamp(CheckpointStamp stamp);
 
   Future<void> deleteAllCheckpoints(String eventId);
-
-
-
 }

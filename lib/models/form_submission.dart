@@ -1,4 +1,3 @@
-
 import 'form_field_answer.dart';
 import 'model_constants.dart';
 
@@ -43,6 +42,26 @@ class FormSubmission {
       submittedAt: DateTime.parse(map[ModelConsts.submittedAt]),
       accepted: map[ModelConsts.accepted],
       answers: answers,
+    );
+  }
+
+  FormSubmission copyWith({
+    String? sid,
+    String? fid,
+    String? userCode,
+    String? eid,
+    DateTime? submittedAt,
+    bool? accepted,
+    List<FieldAnswer>? answers,
+  }) {
+    return FormSubmission(
+      sid: sid ?? this.sid,
+      fid: fid ?? this.fid,
+      userCode: userCode ?? this.userCode,
+      eid: eid ?? this.eid,
+      submittedAt: submittedAt ?? this.submittedAt,
+      accepted: accepted ?? this.accepted,
+      answers: answers ?? this.answers,
     );
   }
 }

@@ -40,20 +40,28 @@ class _EventApprovalScreenState extends State<EventApprovalScreen> {
                 );
               } else {
                 return ListView.builder(
-                  itemBuilder: (context, index) {
-                    final submision = snapshot.data![index];
-                    return ListTile(
-                      title: Text(submision.sid),
-                      trailing: !submision.accepted
-                          ? ElevatedButton(
-                              onPressed: () {},
-                              child: const Text('Approve'),
-                            )
-                          : const Text('Approved'),
-                    );
-                  },
-                  itemCount: snapshot.data!.length,
-                );
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      final submision = snapshot.data![index];
+                      return ListTile(
+                        title: Text(submision.sid),
+                        trailing: submision.accepted
+                            ? const Text(
+                                "Accepted",
+                                style: TextStyle(color: Colors.green),
+                              )
+                            : ElevatedButton(
+                                onPressed: () async {
+                                  var newSubmission = submision.copyWith(
+                                    accepted: true,
+                                  );
+                                  await widget.db
+                                      .updateSubmission(newSubmission);
+                                },
+                                child: const Text('Approve'),
+                              ),
+                      );
+                    });
               }
             }));
   }
