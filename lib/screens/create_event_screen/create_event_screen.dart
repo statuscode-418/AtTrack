@@ -10,7 +10,14 @@ import 'package:uuid/uuid.dart';
 import '../../components/textbox.dart';
 
 class CreateEventScreen extends StatefulWidget {
-  const CreateEventScreen({super.key});
+  final DBModel db;
+  final String uid;
+
+  const CreateEventScreen({
+    super.key,
+    required this.db,
+    required this.uid,
+  });
 
   @override
   State<CreateEventScreen> createState() => _CreateEventScreenState();
@@ -24,10 +31,12 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
   late final TextEditingController _cityController;
   late final TextEditingController _websiteController;
   late final TextEditingController _dateTimeController;
-  late final DBModel _db;
-  late final String _uid;
   DateTime? _selectedDateTime;
   File? _selectedImage;
+
+  DBModel get db => widget.db;
+
+  String get uid => widget.uid;
 
   @override
   void initState() {
@@ -37,22 +46,15 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
     _cityController = TextEditingController();
     _websiteController = TextEditingController();
     _dateTimeController = TextEditingController();
-
-    var args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    _db = args['db'] as DBModel;
-    _uid = args['uid'] as String;
-
     super.initState();
   }
 
   @override
   void dispose() {
-    _addressController.dispose();
     _titleController.dispose();
     _cityController.dispose();
-    _websiteController.dispose();
     _addressController.dispose();
+    _websiteController.dispose();
     _dateTimeController.dispose();
     super.dispose();
   }
@@ -111,7 +113,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
             .uploadImageForEvent(image: _selectedImage!, uid: eid)
         : null;
     var event = EventModel.newEvent(
-      uid: _uid,
+      uid: uid,
       mid: eid,
       title: _titleController.text,
       date: _selectedDateTime!,
@@ -124,9 +126,9 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
       website: _websiteController.text,
       photoUrl: imageUrl,
     );
-    var form = getDefaultForm(eid, _uid);
-    await _db.createEvent(event);
-    await _db.createForm(form);
+    var form = getDefaultForm(eid, uid);
+    await db.createEvent(event);
+    await db.createForm(form);
     if (!mounted) return;
     Navigator.of(context).pop();
   }

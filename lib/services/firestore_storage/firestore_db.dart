@@ -13,11 +13,16 @@ import 'package:attrack/services/firestore_storage/firestore_db_exceptions.dart'
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreDB implements DBModel {
+  bool _isInitialized = false;
   late final FirebaseFirestore _db;
 
   @override
   Future<void> init() async {
+    if (_isInitialized) {
+      return;
+    }
     _db = FirebaseFirestore.instance;
+    _isInitialized = true;
   }
 
   CollectionReference get userCollection => _db.collection(DBConstants.users);

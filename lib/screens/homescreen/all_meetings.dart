@@ -1,14 +1,18 @@
 import 'package:attrack/models/user_model.dart';
 import 'package:attrack/screens/create_event_screen/create_event_screen.dart';
+import 'package:attrack/services/firestore_storage/db_model.dart';
 import 'package:flutter/material.dart';
 import '../../components/eventcard.dart';
 import '../../models/event_model.dart';
 
 class AllMeetings extends StatelessWidget {
   final UserModel user;
+  final DBModel db;
+
   const AllMeetings({
     super.key,
     required this.user,
+    required this.db,
   });
 
   @override
@@ -47,16 +51,23 @@ class AllMeetings extends StatelessWidget {
           ),
           if (user.isAdmin)
             Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const CreateEventScreen(),
-                      ));
-                    },
-                    child: const Text('Create Meeting')))
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => CreateEventScreen(
+                        uid: user.uid,
+                        db: db,
+                      ),
+                    ),
+                  );
+                },
+                child: const Text('Create Meeting'),
+              ),
+            ),
         ],
       ),
     );

@@ -17,6 +17,7 @@ class HomeScreen extends StatefulWidget {
   final DBModel dbprovider;
   final String? error;
   final bool isLoading;
+
   const HomeScreen({
     super.key,
     required this.user,
@@ -52,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
       const UpcommingMeetingsView(),
       AllMeetings(
         user: widget.user,
+        db: widget.dbprovider,
       ),
     ];
   }
