@@ -36,6 +36,7 @@ abstract class DBModel {
   Future<void> deleteForm(String formId);
 
   Future<FormModel?> getForm(String formId);
+  Future<FormModel?> getFormByEvent(String eventId);
 
   Future<void> updateForm(FormModel form);
 

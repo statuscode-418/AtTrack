@@ -1,10 +1,12 @@
 import 'package:attrack/models/event_model.dart';
 import 'package:attrack/models/user_model.dart';
 import 'package:attrack/screens/eventdetails_screen/event_approval_screen.dart';
+import 'package:attrack/screens/userdetails_screen/user_details_view.dart';
+import 'package:attrack/screens/userform/user_form.dart';
 import 'package:attrack/services/firestore_storage/db_model.dart';
 import 'package:flutter/material.dart';
 
-class EventDetailsScreen extends StatelessWidget {
+class EventDetailsScreen extends StatefulWidget {
   final EventModel event;
   final UserModel user;
   final DBModel db;
@@ -15,6 +17,28 @@ class EventDetailsScreen extends StatelessWidget {
     required this.user,
     required this.db,
   });
+
+  @override
+  State<EventDetailsScreen> createState() => _EventDetailsScreenState();
+}
+
+class _EventDetailsScreenState extends State<EventDetailsScreen> {
+  void _joinEvent() async {
+    var form = await widget.db.getFormByEvent(widget.event.eid);
+    if (form == null) {
+      return;
+    }
+    if (!mounted) return;
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) {
+        return UserForm(
+          form: form,
+          user: widget.user,
+          db: widget.db,
+        );
+      },
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +60,9 @@ class EventDetailsScreen extends StatelessWidget {
                   height: 200,
                   foregroundDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
-                    image: event.photoUrl != null
+                    image: widget.event.photoUrl != null
                         ? DecorationImage(
-                            image: NetworkImage(event.photoUrl!),
+                            image: NetworkImage(widget.event.photoUrl!),
                             fit: BoxFit.cover,
                           )
                         : null,
@@ -47,7 +71,7 @@ class EventDetailsScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8.0),
                     color: Colors.grey[300],
                   ),
-                  child: event.photoUrl == null
+                  child: widget.event.photoUrl == null
                       ? Center(
                           child: Icon(
                             Icons.image,
@@ -59,7 +83,7 @@ class EventDetailsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16.0),
                 Text(
-                  event.title,
+                  widget.event.title,
                   style: const TextStyle(
                     fontSize: 30.0,
                     fontWeight: FontWeight.bold,
@@ -72,7 +96,7 @@ class EventDetailsScreen extends StatelessWidget {
                     const Icon(Icons.calendar_today),
                     const SizedBox(width: 8.0),
                     Text(
-                      event.date.toString(),
+                      widget.event.date.toString(),
                       style: const TextStyle(
                           fontSize: 16.0, fontWeight: FontWeight.bold),
                     ),
@@ -83,7 +107,7 @@ class EventDetailsScreen extends StatelessWidget {
                   children: [
                     const Icon(Icons.location_on),
                     const SizedBox(width: 8.0),
-                    Text(event.address,
+                    Text(widget.event.address,
                         style: const TextStyle(
                             fontSize: 16.0, fontWeight: FontWeight.bold)),
                   ],
@@ -95,77 +119,11 @@ class EventDetailsScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF73FBFD))),
                 Text(
-                  event.description ?? '',
+                  widget.event.description ?? '',
                   style: const TextStyle(fontSize: 16.0),
                 ),
                 const SizedBox(height: 80.0),
-                if (!user.isAdmin)
-                  Container(
-                    color: const Color(0xFF322C2C),
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Registration',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 8.0),
-                        const Text(
-                          'Approval Required',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8.0),
-                        const Text(
-                          'Your registration is subject to approval by the host.',
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const Divider(
-                          color: Colors.white,
-                          thickness: 1.0,
-                        ),
-                        const Text(
-                          'Welcome! To join the event, please register below',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8.0),
-                        Center(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // Add your onPressed code here!
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.cyan,
-                            ),
-                            child: const Text(
-                              'Request to Join',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                if (user.isAdmin)
+                if (widget.user.isAdmin && widget.user.uid == widget.event.uid)
                   Container(
                     color: const Color(0xFF322C2C),
                     padding: const EdgeInsets.all(8.0),
@@ -217,8 +175,8 @@ class EventDetailsScreen extends StatelessWidget {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) {
                                   return EventApprovalScreen(
-                                    db: db,
-                                    eventDb: event,
+                                    db: widget.db,
+                                    event: widget.event,
                                   );
                                 },
                               ));
@@ -228,6 +186,70 @@ class EventDetailsScreen extends StatelessWidget {
                             ),
                             child: const Text(
                               'Approve Registration',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                else
+                  Container(
+                    color: const Color(0xFF322C2C),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Registration',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 8.0),
+                        const Text(
+                          'Approval Required',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8.0),
+                        const Text(
+                          'Your registration is subject to approval by the host.',
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const Divider(
+                          color: Colors.white,
+                          thickness: 1.0,
+                        ),
+                        const Text(
+                          'Welcome! To join the event, please register below',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8.0),
+                        Center(
+                          child: ElevatedButton(
+                            onPressed:  _joinEvent,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.cyan,
+                            ),
+                            child: const Text(
+                              'Request to Join',
                               style: TextStyle(
                                 fontSize: 16.0,
                                 color: Colors.white,

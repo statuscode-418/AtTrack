@@ -149,7 +149,8 @@ class FirestoreDB implements DBModel {
   Stream<List<EventModel>> getUpcomingEvents() {
     try {
       return meetingCollection
-          .where(ModelConsts.deadline, isGreaterThanOrEqualTo: DateTime.now().toIso8601String())
+          .where(ModelConsts.deadline,
+              isGreaterThanOrEqualTo: DateTime.now().toIso8601String())
           .orderBy(ModelConsts.deadline, descending: false)
           .snapshots()
           .map((snapshot) {
@@ -270,6 +271,38 @@ class FirestoreDB implements DBModel {
 
       return FormModel.fromMap(
         formDoc.data() as Map<String, dynamic>,
+        formFields,
+      );
+    } on FirebaseException {
+      throw const FirestoreDBExceptions(
+        message: 'Could not get form',
+      );
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
+  Future<FormModel?> getFormByEvent(String eventId) async {
+    try {
+      var formDoc =
+          await formCollection.where(ModelConsts.eid, isEqualTo: eventId).get();
+
+      if (!formDoc.docs.isNotEmpty) {
+        return null;
+      }
+
+      var fields = await formCollection
+          .doc(formDoc.docs.first.id)
+          .collection(DBConstants.formFields)
+          .get();
+
+      var formFields = fields.docs.map((field) {
+        return FormFieldModel.fromMap(field.data());
+      }).toList();
+
+      return FormModel.fromMap(
+        formDoc.docs.first.data() as Map<String, dynamic>,
         formFields,
       );
     } on FirebaseException {

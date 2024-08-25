@@ -6,11 +6,12 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class EventApprovalScreen extends StatefulWidget {
   final DBModel db;
-  EventModel eventDb;
+  EventModel event;
+
   EventApprovalScreen({
     super.key,
     required this.db,
-    required this.eventDb,
+    required this.event,
   });
 
   @override
@@ -25,7 +26,7 @@ class _EventApprovalScreenState extends State<EventApprovalScreen> {
           title: const Text('Event Approval'),
         ),
         body: StreamBuilder<List<FormSubmission>>(
-            stream: widget.db.getSubmissions(widget.eventDb.eid),
+            stream: widget.db.getSubmissions(widget.event.eid),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());

@@ -1,29 +1,38 @@
 import 'package:attrack/models/form_field_answer.dart';
 import 'package:attrack/models/form_model.dart';
+import 'package:attrack/models/form_submission.dart';
 import 'package:attrack/models/user_model.dart';
 import 'package:attrack/screens/userform/components/text_answer_field.dart';
+import 'package:attrack/services/firestore_storage/db_model.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class UserForm extends StatefulWidget {
-  const UserForm({super.key});
+  final FormModel form;
+  final UserModel user;
+  final DBModel db;
+
+  const UserForm({
+    super.key,
+    required this.form,
+    required this.user,
+    required this.db,
+  });
 
   @override
   State<UserForm> createState() => _UserFormState();
 }
 
 class _UserFormState extends State<UserForm> {
-  late FormModel form;
+  FormModel get form => widget.form;
   late List<FieldAnswer> answers;
-  late UserModel user;
+
+  UserModel get user => widget.user;
   List<Widget> fields = [];
 
   @override
   void initState() {
     super.initState();
-    var args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    form = args['form'] as FormModel;
-    user = args['user'] as UserModel;
     answers =
         form.fields.map((field) => FieldAnswer.fromField(field, '')).toList();
     // Will use a better approach later
@@ -76,8 +85,20 @@ class _UserFormState extends State<UserForm> {
               const SizedBox(height: 16),
               ...fields,
               ElevatedButton(
-                onPressed: () {
-                  // Save answers
+                onPressed: () async {
+                  await widget.db.createSubmission(
+                    FormSubmission(
+                      sid: const Uuid().v4(),
+                      fid: form.fid,
+                      userCode: user.uniqueCode,
+                      eid: form.eid,
+                      answers: answers,
+                      submittedAt: DateTime.now(),
+                    ),
+                  );
+                  if (!context.mounted) {
+                    return;
+                  }
                   Navigator.pop(context);
                 },
                 child: const Text('Submit'),

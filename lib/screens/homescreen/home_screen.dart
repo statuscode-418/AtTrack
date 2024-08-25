@@ -138,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Text(
-            'EEnTrack',
+            'AtTrack',
             style: TextStyle(
               color: Colors.white,
               fontSize: 20,
@@ -170,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   backgroundImage: widget.user.photoUrl != null
                       ? NetworkImage(widget.user.photoUrl!)
                       : null,
-                  child: widget.user.photoUrl == null ? const Text('A') : null,
+                  child: widget.user.photoUrl == null ? Text(widget.user.name[0]) : null,
                 ),
               ),
             ],

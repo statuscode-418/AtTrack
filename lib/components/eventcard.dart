@@ -19,6 +19,7 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var format = DateFormat('dd-MM-yyyy');
     return GestureDetector(
+      onTap: onTap,
       child: Card(
         color: const Color(0xFF322C2C),
         margin: const EdgeInsets.all(8.0),
