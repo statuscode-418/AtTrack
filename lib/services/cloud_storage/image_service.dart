@@ -3,11 +3,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class ImageService {
-  final FirebaseStorage _firebaseStorage;
-
-  ImageService({
-    required FirebaseStorage firebaseStorage,
-  }) : _firebaseStorage = firebaseStorage;
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
   Future<String?> uploadImageForProfile(
       {required File image, required String uid}) async {
