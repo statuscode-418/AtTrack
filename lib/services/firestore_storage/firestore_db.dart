@@ -200,15 +200,16 @@ class FirestoreDB implements DBModel {
 
   CollectionReference get formCollection => _db.collection(DBConstants.forms);
 
-  CollectionReference get fieldCollection =>
-      _db.collection(DBConstants.formFields);
-
   @override
   Future<void> createForm(FormModel form) async {
     try {
       await formCollection.doc(form.fid).set(form.toMap());
       var tasks = form.fields.map((field) async {
-        await fieldCollection.doc(field.id).set(field.toMap());
+        await formCollection
+            .doc(form.fid)
+            .collection(DBConstants.formFields)
+            .doc(field.id)
+            .set(field.toMap());
       });
       await Future.wait(tasks);
     } on FirebaseException catch (e) {
@@ -224,8 +225,10 @@ class FirestoreDB implements DBModel {
   @override
   Future<void> deleteForm(String formId) async {
     try {
-      var fields =
-          await fieldCollection.where(ModelConsts.fid, isEqualTo: formId).get();
+      var fields = await formCollection
+          .doc(formId)
+          .collection(DBConstants.formFields)
+          .get();
       var tasks = fields.docs.map((field) async {
         await field.reference.delete();
       });
@@ -244,17 +247,25 @@ class FirestoreDB implements DBModel {
   @override
   Future<FormModel?> getForm(String formId) async {
     try {
-      var fields =
-          await fieldCollection.where(ModelConsts.fid, isEqualTo: formId).get();
-      var formFields = fields.docs.map((field) {
-        return FormFieldModel.fromMap(field.data() as Map<String, dynamic>);
-      }).toList();
-      var form = await formCollection.doc(formId).get();
-      if (form.exists) {
-        return FormModel.fromMap(
-            form.data() as Map<String, dynamic>, formFields);
+      var formDoc = await formCollection.doc(formId).get();
+
+      if (!formDoc.exists) {
+        return null;
       }
-      return null;
+
+      var fields = await formCollection
+          .doc(formId)
+          .collection(DBConstants.formFields)
+          .get();
+
+      var formFields = fields.docs.map((field) {
+        return FormFieldModel.fromMap(field.data());
+      }).toList();
+
+      return FormModel.fromMap(
+        formDoc.data() as Map<String, dynamic>,
+        formFields,
+      );
     } on FirebaseException {
       throw const FirestoreDBExceptions(
         message: 'Could not get form',
@@ -267,17 +278,23 @@ class FirestoreDB implements DBModel {
   @override
   Future<void> updateForm(FormModel form) async {
     try {
-      var fields = await fieldCollection
-          .where(ModelConsts.fid, isEqualTo: form.fid)
+      var fields = await formCollection
+          .doc(form.fid)
+          .collection(DBConstants.formFields)
           .get();
       var tasks = fields.docs.map((field) async {
         await field.reference.delete();
       });
       await Future.wait(tasks);
-      tasks = form.fields.map((field) async {
-        await fieldCollection.doc(field.id).set(field.toMap());
-      });
       await formCollection.doc(form.fid).update(form.toMap());
+      tasks = form.fields.map((field) async {
+        await formCollection
+            .doc(form.fid)
+            .collection(DBConstants.formFields)
+            .doc(field.id)
+            .set(field.toMap());
+      });
+      await Future.wait(tasks);
     } on FirebaseException catch (e) {
       throw FirestoreDBExceptions(
         message: 'Could not update form',
@@ -606,6 +623,28 @@ class FirestoreDB implements DBModel {
     } on FirebaseException catch (e) {
       throw FirestoreDBExceptions(
         message: 'Could not update checkpoint stamp',
+        details: e.toString(),
+      );
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
+  Future<List<CheckpointModel>> getCheckpointsList(String eventId) {
+    try {
+      return _db
+          .collection(DBConstants.checkpoints)
+          .where(ModelConsts.eventId, isEqualTo: eventId)
+          .get()
+          .then((snapshot) {
+        return snapshot.docs
+            .map((doc) => CheckpointModel.fromMap(doc.data()))
+            .toList();
+      });
+    } on FirebaseException catch (e) {
+      throw FirestoreDBExceptions(
+        message: 'Could not get checkpoints list',
         details: e.toString(),
       );
     } on Exception catch (e) {

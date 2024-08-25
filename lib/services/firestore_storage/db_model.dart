@@ -59,6 +59,8 @@ abstract class DBModel {
 
   Stream<List<CheckpointModel>> getCheckpoints(String eventId);
 
+  Future<List<CheckpointModel>> getCheckpointsList(String eventId);
+
   Future<void> createCheckpointStamp(CheckpointStamp stamp);
 
   Future<void> deleteCheckpointStamp(String stampId);

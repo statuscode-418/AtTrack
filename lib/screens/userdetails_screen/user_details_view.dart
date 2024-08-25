@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:attrack/models/user_model.dart';
 import 'package:attrack/services/cloud_storage/image_service.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../components/textbox.dart';
@@ -10,6 +9,7 @@ import '../../components/textbox.dart';
 class UserDetailsView extends StatefulWidget {
   final UserModel user;
   final Function(UserModel) onSubmit;
+
   const UserDetailsView({
     super.key,
     required this.user,
@@ -22,6 +22,7 @@ class UserDetailsView extends StatefulWidget {
 
 class _UserDetailsViewState extends State<UserDetailsView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   UserModel get user => widget.user;
   late final TextEditingController _nameController;
   late final TextEditingController _phoneNumberController;
@@ -30,8 +31,7 @@ class _UserDetailsViewState extends State<UserDetailsView> {
   late final TextEditingController _instagramController;
   late final ImagePicker _picker;
   File? _imageFile;
-  final ImageService _imageService =
-      ImageService(firebaseStorage: FirebaseStorage.instance);
+  final ImageService _imageService = ImageService();
 
   @override
   void initState() {
