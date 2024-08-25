@@ -112,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Icons.event_note,
               size: 30,
             ),
-            label: 'Upcoming Meetings',
+            label: 'Upcoming Events',
           ),
           BottomNavigationBarItem(
             icon: Icon(

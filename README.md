@@ -1,8 +1,11 @@
-# AtTrackt
 # Status Code 1
-# Team Name : status_code-418
-# Team Members : Nabajit Bhadury, Kaushik Chowdhury, Anjishnu Ganguly, Rohan Mitra, Aratrik Bandyopadhyay.
-<h1 align="center"> A hassle free Event Entry Tracker </h1>
+<div align="center">
+ <img url="https://github.com/user-attachments/assets/b41abc73-977b-468f-9c34-08d431fbbce8"></img>
+</div>
+
+<h1 align="center"> AtTrack </h1>
+<h1 align="center"> Geolocation Based Event Management and Attendance Tracking Application </h1>
+<h3 align="center"> <a align="center" href="">Watch Demo Video</a> </h3>
 <br>
 
 <!-- TABLE OF CONTENTS -->
@@ -21,9 +24,9 @@
 
 <h1 id="about-the-project">🤩 About The Project :</h1>
 
-
 # 💭 Inspiration :
-- Being college students, we are enrolled in a lot of communities. We do a lot of community meetings and events as well. One problem that comes up frequently is attendance. We need to take the attendance of attendees for college administrative purposes, proof of impersonation and it also helps to keep track of activeness of the members. 
+- Being college students, we are enrolled in a lot of communities. We do a lot of community meetings, hackathons and events as well. One problem that comes up frequently is attendance. We need to take the attendance of attendees for college administrative purposes, proof of impersonation and it also helps to keep track of activeness of the members. To effectively record and track applicants presence and ensure smooth event experience.
+
 ![image](https://utfs.io/f/ce7efacd-185f-4874-a04a-3607e09ff709-fwpcco.jpeg)
 
 Some existing solutions are:
@@ -50,42 +53,45 @@ Pros:
 
 Cons:
 1. You must have a attendee list beforehand, mostly taken through Google forms
-2. A big hassle for small community meetings
+2. A big hassle to ensure applicant is in the designated area
+3. Maintaining various checkpoints within a single event
 
 - To solve this problem , we came up with a solution using *Cross Platform Framework Flutter*. 
 Getting inspiration from these two systems, and analysing it's pros and cons, we made our app AtTrackt.
 
 
-
 # 💡 What problem does the project solve?
-- The project aims to solve the problem of *Attendance Tracking* in all community meetings.
+- The project aims to solve the problem of *Attendance Tracking* in all community meetings and hackathons.
 - Creating a meeting is as easy as pressing a button and does not need an attendee list beforehand.
 - By scanning the generated QR registration of candidates becomes easy and less time consuming.
 - The export feature uploads all details in Excel sheet thus saving us from the manual labour of data entry.
+- Location of the user is tracked at certain intervals
+- A dedicated AI based doubt clearing section
 
 
 <h1 id="usage">📌 Usage :</h1>
 
 ### Register phase:
 1. Users will register using email and password.
-2. Data of students like name, roll, sem, phone, GitHub profile (optional), LinkedIn profile (optional)
-3. Once logged in, you can create a profile and you can either join or create a meeting.
+2. Data of students like name, email, phone, GitHub profile (optional), LinkedIn profile (optional)
+3. Once logged in, you can create a profile and you can either join or create a event on the basis of you being either the admin or client.
 
 ### Create meeting:
-1. Once logged in, go to create meetings tab
-2. There you will see your past meetings if you have any
-3. Tap on create meeting
+1. Once logged in, go to My Events tab
+2. There you will see your past events if you have any
+3. Tap on create event
 4. You will be navigated to a screen where you'll see a QR code, using which attendee will mark their attendance.
-5. Below the QR code you'll get the list of attendees who scanned the QR
+5. You'll get the list of attendees who scanned the QR code.
 6. Once all the attendance is taken, press the export button to export the details of attendees in Excel sheet.
-7. You can also track the location in a fixed radius, so that any attendee who will scan the QR and not attend the meeting doesn't get the ECA.
+7. You can also track the location in a fixed radius, so that any attendee who will scan the QR and not attend the event doesnot get the attendance.
 
 ![image](https://utfs.io/f/bd217dca-d743-4958-b92c-8126f4efdf37-fw5js6.jpeg)
 
 ### Join a meeting:
-1. Click the scan QR button
-2. Scan the QR code of a meeting
-3. Your attendance is recorded on that meeting
+1. RSVP for a particular event
+2. Click the scan QR button
+3. Scan the QR code of a meeting
+4. Your attendance is recorded on that meeting
 
    ![image](https://utfs.io/f/cc99205a-a3e5-42c4-a85f-476490406724-fwpcdj.jpeg)
 
@@ -100,9 +106,11 @@ Getting inspiration from these two systems, and analysing it's pros and cons, we
 ![image](https://utfs.io/f/6785d396-046a-4099-b2b1-c00d64feaec2-7w30ii.32.45.jpeg)
  
 # 🔮 What's Next For Our Project:
-- Making the attendace tracking system in a more organised way by enabling the two QR based Attendance Tracker during entry and exit
+- Making the attendace tracking system in a more organised way by enabling the two QR based Attendance Tracker during entry and exit along with different mini events and check points
 - Identity Validation of the attendee who is joining the meeting by maintaining a proper database
 - Large Screen Optimization and minor bug fixes
+- Highly efficient geolocation tracking
+- Gemini based AI doubt assistant
   
 
 # <h1 id="tech-stacks-used">👨‍💻 Tech Stacks used :</h1>
@@ -115,18 +123,19 @@ Getting inspiration from these two systems, and analysing it's pros and cons, we
 
 # Special Quirks :
 - Supports Material U dynamic coloring on android 12+
-- Random Profile Avatar on registering based on name
+- Geolocation Tracking
+- AI doubt system
+- Organised event management
 
 # Tracks Targeted :
 - Open Innovation
-- Special emphasis has been given over UI and UX to take the user experience to a another level
 - Best Freshers Track, since this is our first offline hackathon.
 
 
 # Installation :
 
 To use this app:
-- Download the apk file from <a href="https://github.com/statuscode-418/AtTrackt/build/app/outputs/flutter-apk/app-release.apk">here</a>
+- Download the apk file from <a href="">here</a>
 - Install the apk
 - open the app and Enjoy 😉!!
 
