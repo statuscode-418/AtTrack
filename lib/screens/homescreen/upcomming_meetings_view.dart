@@ -1,4 +1,5 @@
 import 'package:attrack/models/user_model.dart';
+import 'package:attrack/screens/eventdetails_screen/eventdetails_screen.dart';
 import 'package:attrack/services/firestore_storage/db_model.dart';
 import 'package:flutter/material.dart';
 import '../../components/eventcard.dart';
@@ -8,6 +9,7 @@ import '../../models/event_model.dart';
 class UpcommingMeetingsView extends StatelessWidget {
   UserModel user;
   final DBModel db;
+
   UpcommingMeetingsView({
     super.key,
     required this.user,
@@ -52,6 +54,17 @@ class UpcommingMeetingsView extends StatelessWidget {
                         return EventCard(
                           user: user,
                           event: event!,
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => EventDetailsScreen(
+                                  event: event,
+                                  user: user,
+                                  db: db,
+                                ),
+                              ),
+                            );
+                          },
                         );
                       },
                     ),

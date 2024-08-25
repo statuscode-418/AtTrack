@@ -1,38 +1,27 @@
 import 'package:attrack/models/event_model.dart';
 import 'package:attrack/models/user_model.dart';
-import 'package:attrack/screens/eventdetails_screen/eventdetails_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class EventCard extends StatelessWidget {
   final EventModel event;
   final UserModel user;
+  final VoidCallback onTap;
 
   const EventCard({
     super.key,
     required this.event,
     required this.user,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     var format = DateFormat('dd-MM-yyyy');
     return GestureDetector(
-      onTap: (){
-        EventDetailsScreen(event: event, user: user);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => EventDetailsScreen(
-              event: event,
-              user: user,
-            ),
-          ),
-        );
-      },
       child: Card(
         color: const Color(0xFF322C2C),
-         margin: const EdgeInsets.all(8.0),
+        margin: const EdgeInsets.all(8.0),
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Row(
@@ -54,10 +43,9 @@ class EventCard extends StatelessWidget {
                     Text(
                       event.description ?? '',
                       style: const TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold
-                      ),
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 10),
                     Text(
@@ -85,17 +73,19 @@ class EventCard extends StatelessWidget {
                 height: 120,
                 foregroundDecoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
-                  image: event.photoUrl != null ?  DecorationImage(
-                    image: NetworkImage(event.photoUrl!),
-                    fit: BoxFit.cover,
-                  ) : null,
+                  image: event.photoUrl != null
+                      ? DecorationImage(
+                          image: NetworkImage(event.photoUrl!),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
                   color: Colors.grey[300],
                 ),
                 child: event.photoUrl == null
-                    ?  Center(
+                    ? Center(
                         child: Icon(
                           Icons.image,
                           color: Colors.grey[800],

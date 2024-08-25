@@ -149,7 +149,7 @@ class FirestoreDB implements DBModel {
   Stream<List<EventModel>> getUpcomingEvents() {
     try {
       return meetingCollection
-          .where(ModelConsts.deadline, isGreaterThanOrEqualTo: DateTime.now())
+          .where(ModelConsts.deadline, isGreaterThanOrEqualTo: DateTime.now().toIso8601String())
           .orderBy(ModelConsts.deadline, descending: false)
           .snapshots()
           .map((snapshot) {
