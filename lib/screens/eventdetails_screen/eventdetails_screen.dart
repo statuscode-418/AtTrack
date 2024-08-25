@@ -1,16 +1,19 @@
 import 'package:attrack/models/event_model.dart';
 import 'package:attrack/models/user_model.dart';
 import 'package:attrack/screens/eventdetails_screen/event_approval_screen.dart';
+import 'package:attrack/services/firestore_storage/db_model.dart';
 import 'package:flutter/material.dart';
 
 class EventDetailsScreen extends StatelessWidget {
   final EventModel event;
   final UserModel user;
+  final DBModel db;
 
   const EventDetailsScreen({
     super.key,
     required this.event,
     required this.user,
+    required this.db,
   });
 
   @override
@@ -213,7 +216,10 @@ class EventDetailsScreen extends StatelessWidget {
                               // Add your onPressed code here!
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) {
-                                  return const EventApprovalScreen();
+                                  return EventApprovalScreen(
+                                    db: db,
+                                    eventDb: event,
+                                  );
                                 },
                               ));
                             },
