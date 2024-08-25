@@ -20,7 +20,7 @@ class UserDetailsQrView extends StatelessWidget {
         ),
         child: QRCode(
           data: userCredString,
-          backgroundColor: Color(0xFF73FBFD),
+          backgroundColor: const Color(0xFF73FBFD),
         ),
       ),
     );
