@@ -1,5 +1,6 @@
 import 'package:attrack/models/event_model.dart';
 import 'package:attrack/models/user_model.dart';
+import 'package:attrack/screens/eventdetails_screen/event_approval_screen.dart';
 import 'package:flutter/material.dart';
 
 class EventDetailsScreen extends StatelessWidget {
@@ -161,7 +162,7 @@ class EventDetailsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  if (user.isAdmin)
+                if (user.isAdmin)
                   Container(
                     color: const Color(0xFF322C2C),
                     padding: const EdgeInsets.all(8.0),
@@ -210,6 +211,11 @@ class EventDetailsScreen extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () {
                               // Add your onPressed code here!
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) {
+                                  return const EventApprovalScreen();
+                                },
+                              ));
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.cyan,
