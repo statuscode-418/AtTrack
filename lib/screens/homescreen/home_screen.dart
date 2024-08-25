@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _screens = [
       UserDetailsQrView(user: widget.user),
-      const UpcommingMeetingsView(),
+       UpcommingMeetingsView(user: widget.user),
       AllMeetings(
         user: widget.user,
       ),

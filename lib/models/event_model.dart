@@ -1,4 +1,6 @@
 
+import 'package:attrack/models/user_model.dart';
+
 import 'model_constants.dart';
 
 class EventModel {
