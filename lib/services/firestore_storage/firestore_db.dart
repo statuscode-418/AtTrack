@@ -371,6 +371,23 @@ class FirestoreDB implements DBModel {
   }
 
   @override
+  Future<void> updateSubmission(FormSubmission submission) async {
+    try {
+      await _db
+          .collection(DBConstants.formSubmissions)
+          .doc(submission.sid)
+          .update(submission.toMap());
+    } on FirebaseException catch (e) {
+      throw FirestoreDBExceptions(
+        message: 'Could not update submission',
+        details: e.toString(),
+      );
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
   Future<void> deleteSubmission(String submissionId) async {
     try {
       var answers = await _db

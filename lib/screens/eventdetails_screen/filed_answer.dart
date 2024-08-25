@@ -29,7 +29,10 @@ class FieldAnswerCard extends StatelessWidget {
                 children: filteredAnswers.map((answer) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text('${answer.label}: ${answer.answer}'),
+                    child: Text(
+                      '${answer.label}: ${answer.answer}',
+                      style: const TextStyle(color: Colors.red),
+                    ),
                   );
                 }).toList(),
               ),

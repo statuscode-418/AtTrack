@@ -39,16 +39,40 @@ class _EventApprovalScreenState extends State<EventApprovalScreen> {
                   child: Text('No events found'),
                 );
               } else {
-                return ListView.builder(itemBuilder: (context, index) {
-                  final submision = snapshot.data![index];
-                  return ListTile(
-                    title: Text(submision.sid),
-                    trailing: ElevatedButton(
-                      onPressed: () {},
-                      child: const Text('Approve'),
-                    ),
-                  );
-                });
+                return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      final submision = snapshot.data![index];
+                      // return Card(
+                      //   child: Column(
+                      //     children: [
+                      //       FieldAnswerCard(
+                      //           futureAnswers: Future.value(submision.answers)),
+                      //       ElevatedButton(
+                      //           onPressed: () async {
+                      //             var newSubmission = submision.copyWith(
+                      //               accepted: true,
+                      //             );
+                      //             await widget.db
+                      //                 .updateSubmission(newSubmission);
+                      //           },
+                      //           child: const Text('Approve')),
+                      //     ],
+                      //   ),
+                      // );
+                      return ListTile(
+                        title: Text(submision.sid),
+                        trailing: ElevatedButton(
+                          onPressed: () async {
+                            var newSubmission = submision.copyWith(
+                              accepted: true,
+                            );
+                            await widget.db.updateSubmission(newSubmission);
+                          },
+                          child: const Text('Approve'),
+                        ),
+                      );
+                    });
               }
             }));
   }
