@@ -35,40 +35,46 @@ class _UserFormState extends State<UserForm> {
     super.initState();
     answers =
         form.fields.map((field) => FieldAnswer.fromField(field, '')).toList();
-    // Will use a better approach later
-    fields = form.fields.map(
-      (field) {
-        TextEditingController? controller;
-        bool enabled = true;
-        if (field.id == 'name') {
-          controller = TextEditingController(text: user.name);
-          enabled = false;
-        } else if (field.id == 'email') {
-          controller = TextEditingController(text: user.email);
-          enabled = false;
-        } else if (field.id == 'phone') {
-          controller = TextEditingController(text: user.phoneNumber);
-          enabled = false;
-        } else if (field.id == 'instagram') {
-          controller = TextEditingController(text: user.instagram);
-        } else if (field.id == 'github') {
-          controller = TextEditingController(text: user.github);
-        } else if (field.id == 'linkedin') {
-          controller = TextEditingController(text: user.linkedin);
-        }
-        return TextAnswerField(
-          fieldAnswer: answers[field.index],
+    fields = [];
+    for (var i = 0; i < form.fields.length; i++) {
+      final field = form.fields[i];
+      TextEditingController? controller;
+      bool enabled = true;
+      if (field.id == 'name') {
+        answers[i] = answers[i].copyWith(answer: user.name);
+        controller = TextEditingController(text: user.name);
+        enabled = false;
+      } else if (field.id == 'email') {
+        answers[i] = answers[i].copyWith(answer: user.email);
+        controller = TextEditingController(text: user.email);
+        enabled = false;
+      } else if (field.id == 'phone') {
+        answers[i] = answers[i].copyWith(answer: user.phoneNumber);
+        controller = TextEditingController(text: user.phoneNumber);
+        enabled = false;
+      } else if (field.id == 'instagram') {
+        answers[i] = answers[i].copyWith(answer: user.instagram);
+        controller = TextEditingController(text: user.instagram);
+      } else if (field.id == 'github') {
+        answers[i] = answers[i].copyWith(answer: user.github);
+        controller = TextEditingController(text: user.github);
+      } else if (field.id == 'linkedin') {
+        answers[i] = answers[i].copyWith(answer: user.linkedin);
+        controller = TextEditingController(text: user.linkedin);
+      }
+      fields.add(
+        TextAnswerField(
+          fieldAnswer: answers[i],
           controller: controller,
           onChanged: (value) {
             setState(() {
-              answers[field.index] =
-                  answers[field.index].copyWith(answer: value);
+              answers[i] = answers[i].copyWith(answer: value);
             });
           },
           enabled: enabled,
-        );
-      },
-    ).toList();
+        ),
+      );
+    }
   }
 
   @override

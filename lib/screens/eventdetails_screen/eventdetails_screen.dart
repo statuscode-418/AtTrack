@@ -1,7 +1,6 @@
 import 'package:attrack/models/event_model.dart';
 import 'package:attrack/models/user_model.dart';
 import 'package:attrack/screens/eventdetails_screen/event_approval_screen.dart';
-import 'package:attrack/screens/userdetails_screen/user_details_view.dart';
 import 'package:attrack/screens/userform/user_form.dart';
 import 'package:attrack/services/firestore_storage/db_model.dart';
 import 'package:flutter/material.dart';
