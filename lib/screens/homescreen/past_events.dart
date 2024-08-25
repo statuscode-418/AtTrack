@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import '../../components/eventcard.dart';
 import '../../models/event_model.dart';
 
-class AllMeetings extends StatelessWidget {
+class PastEvents extends StatelessWidget {
   final UserModel user;
   final DBModel db;
 
-  const AllMeetings({
+  const PastEvents({
     super.key,
     required this.user,
     required this.db,
@@ -22,33 +22,33 @@ class AllMeetings extends StatelessWidget {
       child: Stack(
         children: [
           Positioned.fill(
-            child: ListView(
-              children: [
-                const Text(
-                  'Event History',
-                  style: TextStyle(
-                    fontSize: 30,
-                    color: Color(0xFF73FBFD),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                EventCard(
-                  user: user,
-                  event: EventModel.newEvent(
-                    uid: '1bd',
-                    mid: 'hello',
-                    title: 'Hack4Bengal',
-                    date: DateTime.now(),
-                    city: 'Kolkata',
-                    address: 'kolkata',
-                    latitude: 12,
-                    longitude: 24,
-                    deadline: DateTime.now(),
-                  ),
-                ), 
-              ],
-            ),
+            child: StreamBuilder<List<EventModel>>(
+                stream: db.getEvents(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error : $snapshot.error'),
+                    );
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(
+                      child: Text('No events found'),
+                    );
+                  } else {
+                    final events = snapshot.data;
+                    return ListView.builder(
+                      itemCount: events?.length,
+                      itemBuilder: (context, index) {
+                        final event = events?[index];
+                        return EventCard(
+                          user: user,
+                          event: event!,
+                        );
+                      },
+                    );
+                  }
+                }),
           ),
           if (user.isAdmin)
             Positioned(

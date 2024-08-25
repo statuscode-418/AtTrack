@@ -2,7 +2,7 @@ import 'package:attrack/bloc/auth_bloc/auth_bloc.dart';
 import 'package:attrack/bloc/auth_bloc/events/auth_event_logout.dart';
 import 'package:attrack/bloc/auth_bloc/events/auth_event_show_update_user_details.dart';
 import 'package:attrack/models/user_model.dart';
-import 'package:attrack/screens/homescreen/all_meetings.dart';
+import 'package:attrack/screens/homescreen/past_events.dart';
 import 'package:attrack/screens/homescreen/notification_screen.dart';
 import 'package:attrack/screens/homescreen/upcomming_meetings_view.dart';
 import 'package:attrack/screens/homescreen/user_details_qr_view.dart';
@@ -50,8 +50,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _screens = [
       UserDetailsQrView(user: widget.user),
-       UpcommingMeetingsView(user: widget.user),
-      AllMeetings(
+      UpcommingMeetingsView(
+        user: widget.user,
+        db: widget.dbprovider,
+      ),
+      PastEvents(
         user: widget.user,
         db: widget.dbprovider,
       ),

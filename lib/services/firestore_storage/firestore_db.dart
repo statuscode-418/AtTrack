@@ -150,6 +150,7 @@ class FirestoreDB implements DBModel {
     try {
       return meetingCollection
           .where(ModelConsts.deadline, isGreaterThanOrEqualTo: DateTime.now())
+          .orderBy(ModelConsts.deadline, descending: false)
           .snapshots()
           .map((snapshot) {
         return snapshot.docs
