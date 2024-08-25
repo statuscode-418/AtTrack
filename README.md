@@ -1,9 +1,9 @@
 # Status Code 1
 <div align="center">
- <kbd><img src="" width="100" height="100"/></kbd>
+ <img url="https://github.com/user-attachments/assets/b41abc73-977b-468f-9c34-08d431fbbce8"></img>
 </div>
 
-<h1 align="center"> EenTrack </h1>
+<h1 align="center"> AtTrack </h1>
 <h1 align="center"> Geolocation Based Event Management and Attendance Tracking Application </h1>
 <h3 align="center"> <a align="center" href="">Watch Demo Video</a> </h3>
 <br>
