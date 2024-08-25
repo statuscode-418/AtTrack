@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: <Widget>[
                       const CircleAvatar(
                         radius: 60,
-                        //backgroundImage: AssetImage('assets/images/avatar.png'),
+                        backgroundImage: AssetImage("assets/attrackt.jpg"),
                       ),
                       const SizedBox(height: 30),
                       const Text('Welcome Back..',
