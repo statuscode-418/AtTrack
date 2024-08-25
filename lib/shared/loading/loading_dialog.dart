@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:attrack/shared/loading/loading_dialog_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoadingDialog {
   static final LoadingDialog _shared = LoadingDialog.sharedInstance();
@@ -50,7 +51,7 @@ class LoadingDialog {
               minWidth: size.width * 0.5,
             ),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Colors.black,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
@@ -63,7 +64,10 @@ class LoadingDialog {
                     const SizedBox(
                       height: 10,
                     ),
-                    const CircularProgressIndicator(),
+                    const SpinKitSpinningLines(
+                      color: Colors.white,
+                      size: 150,
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
