@@ -2,7 +2,6 @@
 # Status Code 1
 # Team Name : status_code-418
 # Team Members : Nabajit Bhadury, Kaushik Chowdhury, Anjishnu Ganguly, Rohan Mitra, Aratrik Bandyopadhyay.
-<h1 align="center"> A </h1>
 <h1 align="center"> A hassle free Event Entry Tracker </h1>
 <br>
 
@@ -127,7 +126,7 @@ Getting inspiration from these two systems, and analysing it's pros and cons, we
 # Installation :
 
 To use this app:
-- Download the apk file from <a href="https://github.com/statuscode-418/build/app/outputs/flutter-apk/app-release.apk">here</a>
+- Download the apk file from <a href="https://github.com/statuscode-418/AtTrackt/build/app/outputs/flutter-apk/app-release.apk">here</a>
 - Install the apk
 - open the app and Enjoy 😉!!
 
