@@ -19,9 +19,11 @@ class UpcommingMeetingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(8.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 10),
           const Text(
             'Upcoming Events',
             style: TextStyle(
@@ -30,7 +32,7 @@ class UpcommingMeetingsView extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 25),
           StreamBuilder<List<EventModel>>(
               stream: db.getUpcomingEvents(),
               builder: (context, snapshot) {
@@ -42,7 +44,7 @@ class UpcommingMeetingsView extends StatelessWidget {
                   );
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                   return const Center(
-                    child: Text('No events found'),
+                    child: Text('No events found', style: TextStyle(fontSize: 20, color: Colors.white)),
                   );
                 } else {
                   final events = snapshot.data;

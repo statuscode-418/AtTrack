@@ -7,6 +7,7 @@ import 'package:attrack/screens/homescreen/notification_screen.dart';
 import 'package:attrack/screens/homescreen/upcomming_meetings_view.dart';
 import 'package:attrack/screens/homescreen/user_details_qr_view.dart';
 import 'package:attrack/services/firestore_storage/db_model.dart';
+import 'package:attrack/utils/colors.dart';
 import 'package:attrack/utils/dialog/logout_dialog.dart';
 import 'package:attrack/utils/dialog/user_settings_dialog.dart';
 import 'package:flutter/material.dart';
@@ -88,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0F0E0E),
+      backgroundColor: tPrimaryColor,
       appBar: _appBar(),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -96,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
         useLegacyColorScheme: false,
         currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: const Color(0xFF322C2C),
+        backgroundColor: tSecondaryColor,
         unselectedItemColor: Colors.white,
         iconSize: 30,
         items: const [
@@ -133,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   AppBar _appBar() {
     return AppBar(
-      backgroundColor: Colors.black,
+      backgroundColor: tPrimaryColor,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

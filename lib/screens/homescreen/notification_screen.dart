@@ -19,7 +19,7 @@ class NotificationScreen extends StatelessWidget {
           },
         ),
         title:
-            const Text("Notifications", style: TextStyle(color: Color(0xFF73FBFD))),
+            const Text("Notifications", style: TextStyle(color: Colors.white),),
       ),
       body:  const Padding(
       padding: EdgeInsets.all(16.0),

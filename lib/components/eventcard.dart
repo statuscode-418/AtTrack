@@ -17,7 +17,7 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var format = DateFormat('dd-MM-yyyy');
+    //var format = DateFormat('dd-MM-yyyy');
     return GestureDetector(
       onTap: onTap,
       child: Card(
@@ -35,7 +35,7 @@ class EventCard extends StatelessWidget {
                     Text(
                       event.title,
                       style: const TextStyle(
-                        fontSize: 25,
+                        fontSize: 23,
                         color: Color(0xFF73FBFD),
                         fontWeight: FontWeight.bold,
                       ),
@@ -44,15 +44,17 @@ class EventCard extends StatelessWidget {
                     Text(
                       event.description ?? '',
                       style: const TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      'Date: ${format.format(event.date)}',
+                      DateFormat('d MMMM yyyy').format(event.date),
                       style: const TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
@@ -60,7 +62,7 @@ class EventCard extends StatelessWidget {
                     Text(
                       event.address,
                       style: const TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
@@ -83,13 +85,13 @@ class EventCard extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
-                  color: Colors.grey[300],
+                  color: Colors.grey[700],
                 ),
                 child: event.photoUrl == null
                     ? Center(
                         child: Icon(
                           Icons.image,
-                          color: Colors.grey[800],
+                          color: Colors.white,
                           size: 50,
                         ),
                       )

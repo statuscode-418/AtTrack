@@ -1,4 +1,5 @@
 import 'package:attrack/models/user_model.dart';
+import 'package:attrack/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 enum SettingOptions {
@@ -18,25 +19,29 @@ Future<SettingOptions?> showSettingsDialog(
         title: Text(
           user.name,
           textAlign: TextAlign.center,
-          style: TextStyle(
-                color: Color(0xFF73FBFD),
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-              ),
+          style: const TextStyle(
+            color: ttertiaryColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),
         ),
         children: [
           CircleAvatar(
             radius: 60,
-            //backgroundImage: ,
+            backgroundImage: user.photoUrl != null
+                ? NetworkImage(user.photoUrl!)
+                : null,
+            child:
+                user.photoUrl == null ? Text(user.name[0]) : null,
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
               user.email,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color(0xFF73FBFD),
+              style: const TextStyle(
+                color: ttertiaryColor,
                 fontSize: 18,
               ),
             ),

@@ -3,7 +3,9 @@ import 'package:attrack/models/user_model.dart';
 import 'package:attrack/screens/eventdetails_screen/event_approval_screen.dart';
 import 'package:attrack/screens/userform/user_form.dart';
 import 'package:attrack/services/firestore_storage/db_model.dart';
+import 'package:attrack/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EventDetailsScreen extends StatefulWidget {
   final EventModel event;
@@ -56,7 +58,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
               children: [
                 Container(
                   width: double.infinity,
-                  height: 200,
+                  height: 170,
                   foregroundDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
                     image: widget.event.photoUrl != null
@@ -92,10 +94,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                 const SizedBox(height: 16.0),
                 Row(
                   children: [
-                    const Icon(Icons.calendar_today),
+                    const Icon(Icons.calendar_month),
                     const SizedBox(width: 8.0),
                     Text(
-                      widget.event.date.toString(),
+                      DateFormat('dd MMMM yyyy hh:mm a').format(widget.event.date),
                       style: const TextStyle(
                           fontSize: 16.0, fontWeight: FontWeight.bold),
                     ),
@@ -116,7 +118,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     style: TextStyle(
                         fontSize: 30.0,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF73FBFD))),
+                        color: ttertiaryColor)),
+                const SizedBox(height: 8.0),
                 Text(
                   widget.event.description ?? '',
                   style: const TextStyle(fontSize: 16.0),
@@ -140,7 +143,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 80.0),
+                const SizedBox(height: 20.0),
                 if (widget.user.isAdmin && widget.user.uid == widget.event.uid)
                   Container(
                     color: const Color(0xFF322C2C),
@@ -153,7 +156,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           style: TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: ttertiaryColor,
                           ),
                         ),
                         const SizedBox(height: 8.0),
@@ -227,7 +230,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           style: TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: ttertiaryColor,
                           ),
                         ),
                         const SizedBox(height: 8.0),

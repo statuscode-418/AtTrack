@@ -1,3 +1,4 @@
+import 'package:attrack/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/dialog/show_generic_dialog.dart';
@@ -47,7 +48,7 @@ class NotificationTile extends StatelessWidget {
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18.0,
-                      color: Colors.white,
+                      color: ttertiaryColor,
                     ),
                   ),
                   const SizedBox(height: 1.0),

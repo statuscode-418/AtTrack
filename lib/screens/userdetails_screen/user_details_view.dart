@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:attrack/models/user_model.dart';
 import 'package:attrack/services/cloud_storage/image_service.dart';
+import 'package:attrack/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../components/textbox.dart';
@@ -82,10 +83,11 @@ class _UserDetailsViewState extends State<UserDetailsView> {
                     onTap: _pickImage,
                     child: CircleAvatar(
                       radius: 60,
+                      backgroundColor: Colors.cyan,
                       backgroundImage:
                           _imageFile != null ? FileImage(_imageFile!) : null,
                       child: _imageFile == null
-                          ? const Icon(Icons.camera_alt, size: 50)
+                          ? const Icon(Icons.camera_alt, size: 50, color: Colors.white)
                           : null,
                     ),
                   ),
@@ -171,30 +173,38 @@ class _UserDetailsViewState extends State<UserDetailsView> {
                   const SizedBox(
                     height: 20,
                   ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      if (!_formKey.currentState!.validate()) {
-                        return;
-                      }
+                  SizedBox(
+                    width: 300,
+                    height: 40,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.cyan,
+                      ),
+                      onPressed: () async {
+                        if (!_formKey.currentState!.validate()) {
+                          return;
+                        }
 
-                      String? photoUrl;
-                      if (_imageFile != null) {
-                        photoUrl = await _imageService.uploadImageForProfile(
-                          image: _imageFile!,
-                          uid: user.uid,
+                        String? photoUrl;
+                        if (_imageFile != null) {
+                          photoUrl = await _imageService.uploadImageForProfile(
+                            image: _imageFile!,
+                            uid: user.uid,
+                          );
+                        }
+                        var updatedCred = user.copyWith(
+                          name: _nameController.text,
+                          github: _githubController.text,
+                          linkedin: _linkedinController.text,
+                          instagram: _instagramController.text,
+                          phoneNumber: _phoneNumberController.text,
+                          photoUrl: photoUrl,
                         );
-                      }
-                      var updatedCred = user.copyWith(
-                        name: _nameController.text,
-                        github: _githubController.text,
-                        linkedin: _linkedinController.text,
-                        instagram: _instagramController.text,
-                        phoneNumber: _phoneNumberController.text,
-                        photoUrl: photoUrl,
-                      );
-                      widget.onSubmit(updatedCred);
-                    },
-                    child: const Text('Submit'),
+                        widget.onSubmit(updatedCred);
+                      },
+                      child: const Text('Submit',
+                          style: TextStyle(color: Colors.white)),
+                    ),
                   )
                 ],
               ),
