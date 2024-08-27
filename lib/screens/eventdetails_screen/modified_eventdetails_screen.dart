@@ -6,12 +6,12 @@ import 'package:attrack/services/firestore_storage/db_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class EventDetailsScreen extends StatelessWidget {
+class ModifiedEventDetailsScreen extends StatelessWidget {
   final EventModel event;
   final UserModel user;
   final DBModel db;
 
-  const EventDetailsScreen({
+  const ModifiedEventDetailsScreen({
     super.key,
     required this.event,
     required this.user,
