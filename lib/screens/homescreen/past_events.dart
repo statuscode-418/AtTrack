@@ -78,25 +78,29 @@ class PastEvents extends StatelessWidget {
               bottom: 0,
               left: 0,
               right: 0,
-              child: SizedBox(
-                width: 300,
-                height: 40,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.cyan,
+              child: Center(
+                child: SizedBox(
+                  width: 300,
+                  height: 40,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.cyan,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => CreateEventScreen(
+                            uid: user.uid,
+                            db: db,
                           ),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => CreateEventScreen(
-                          uid: user.uid,
-                          db: db,
                         ),
-                      ),
-                    );
-                  },
-                  child: const Text('Create Meeting',
-                      style: TextStyle(color: Colors.white)),
+                      );
+                    },
+                    child: const Text(
+                      'Create Meeting',
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  ),
                 ),
               ),
             ),
