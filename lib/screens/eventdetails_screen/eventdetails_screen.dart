@@ -1,11 +1,16 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:attrack/models/checkpoint_model.dart';
 import 'package:attrack/models/event_model.dart';
 import 'package:attrack/models/user_model.dart';
-import 'package:attrack/screens/eventdetails_screen/event_approval_screen.dart';
+import 'package:attrack/screens/eventapproval_screen/event_approval_screen.dart';
 import 'package:attrack/screens/userform/user_form.dart';
 import 'package:attrack/services/firestore_storage/db_model.dart';
+import 'package:attrack/services/firestore_storage/firestore_db_exceptions.dart';
 import 'package:attrack/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
 
 class EventDetailsScreen extends StatefulWidget {
   final EventModel event;
@@ -39,6 +44,67 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
         );
       },
     ));
+  }
+
+  void _addChip() async {
+    var result = await _showAddChipDialog();
+    if (result != null && result.isNotEmpty) {
+      var checkpointID = const Uuid();
+      var checkPoint = CheckpointModel(
+        checkpointId: checkpointID.v4(),
+        name: result['name']!,
+        description: result['description']!,
+        eventId: widget.event.eid,
+        createdAt: DateTime.now(),
+      );
+
+      try {
+        await widget.db.createCheckpoint(checkPoint);
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to create checkpoint: $e')),
+        );
+        throw GenericDbException(e.toString());
+      }
+    }
+  }
+
+  Future<Map<String, String>?> _showAddChipDialog() {
+    TextEditingController nameController = TextEditingController();
+    TextEditingController descriptionController = TextEditingController();
+    return showDialog<Map<String, String>?>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Enter label'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: const InputDecoration(hintText: 'Checkpoint name'),
+              ),
+              TextField(
+                controller: descriptionController,
+                decoration:
+                    const InputDecoration(hintText: 'Enter description'),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop({
+                  'name': nameController.text,
+                  'description': descriptionController.text,
+                });
+              },
+              child: const Text('Add'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -97,7 +163,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     const Icon(Icons.calendar_month),
                     const SizedBox(width: 8.0),
                     Text(
-                      DateFormat('dd MMMM yyyy hh:mm a').format(widget.event.date),
+                      DateFormat('dd MMMM yyyy hh:mm a')
+                          .format(widget.event.date),
                       style: const TextStyle(
                           fontSize: 16.0, fontWeight: FontWeight.bold),
                     ),
@@ -125,25 +192,71 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   style: const TextStyle(fontSize: 16.0),
                 ),
                 const SizedBox(height: 16.0),
-                const Wrap(
-                  spacing: 8.0, // gap between adjacent chips
-                  runSpacing: 4.0, // gap between lines
-                  children: [
-                    Chip(
-                      label: Text('Entry'),
-                    ),
-                    Chip(
-                      label: Text('Lunch'),
-                    ),
-                    Chip(
-                      label: Text('Dinner'),
-                    ),
-                    Chip(
-                      label: Text('Exit'),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20.0),
+                StreamBuilder<List<CheckpointModel>>(
+                    stream: widget.db.getCheckpoints(widget.event.eid),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      }
+                      if (snapshot.hasError) {
+                        return const Text('Error loading checkpoints');
+                      }
+                      if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Text('No checkpoints available');
+                      }
+
+                      var checkPonts = snapshot.data!;
+
+                      return Wrap(
+                        spacing: 8,
+                        children: [
+                          for (var checkPoint in checkPonts)
+                            Chip(
+                              label: Text(checkPoint.name),
+                              onDeleted: widget.user.isAdmin
+                                  ? () async {
+                                      try {
+                                        await widget.db.deleteCheckpoint(
+                                            checkPoint.checkpointId);
+                                      } catch (e) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                                'Failed to delete checkpoint: $e'),
+                                          ),
+                                        );
+                                      }
+                                    }
+                                  : null,
+                            ),
+                        ],
+                      );
+                    }),
+                // Wrap(
+                //   spacing: 8,
+                //   children: [
+                //     for (var label in _chipLabels)
+                //       Chip(
+                //         label: Text(label['name']!),
+                //         onDeleted: () async {
+                //           await widget.db.deleteCheckpoint(
+                //               label['checkpointID']!); // deletion not done
+                //           setState(() {
+                //             _chipLabels.remove(label);
+                //           });
+                //         },
+                //       ),
+                //   ],
+                // ),
+                if (widget.user.isAdmin)
+                  IconButton(
+                    onPressed: () {
+                      _addChip();
+                    },
+                    icon: const Icon(Icons.add),
+                  ),
+                const SizedBox(height: 30.0),
                 if (widget.user.isAdmin && widget.user.uid == widget.event.uid)
                   Container(
                     color: const Color(0xFF322C2C),

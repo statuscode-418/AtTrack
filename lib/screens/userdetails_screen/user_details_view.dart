@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:attrack/models/user_model.dart';
 import 'package:attrack/services/cloud_storage/image_service.dart';
-import 'package:attrack/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../components/textbox.dart';
@@ -87,7 +86,8 @@ class _UserDetailsViewState extends State<UserDetailsView> {
                       backgroundImage:
                           _imageFile != null ? FileImage(_imageFile!) : null,
                       child: _imageFile == null
-                          ? const Icon(Icons.camera_alt, size: 50, color: Colors.white)
+                          ? const Icon(Icons.camera_alt,
+                              size: 50, color: Colors.white)
                           : null,
                     ),
                   ),
