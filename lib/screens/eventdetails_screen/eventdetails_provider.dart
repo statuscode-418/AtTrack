@@ -51,7 +51,6 @@ class EventDetailsProvider extends ChangeNotifier {
 
       try {
         await db.createCheckpoint(checkPoint);
-        notifyListeners();
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Failed to create checkpoint: $e')),

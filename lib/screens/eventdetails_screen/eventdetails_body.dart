@@ -129,7 +129,6 @@ class EventDetailsBody extends StatelessWidget {
                                       try {
                                         await provider.db.deleteCheckpoint(
                                             checkPoint.checkpointId);
-                                        provider.notifyListeners();
                                       } catch (e) {
                                         // ignore: use_build_context_synchronously
                                         ScaffoldMessenger.of(context)
