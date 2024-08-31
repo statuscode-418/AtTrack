@@ -1,6 +1,7 @@
 import 'package:attrack/models/checkpoint_model.dart';
 import 'package:attrack/screens/eventapproval_screen/event_approval_screen.dart';
 import 'package:attrack/screens/eventdetails_screen/eventdetails_provider.dart';
+import 'package:attrack/screens/scanning/scanning_screen.dart';
 import 'package:attrack/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -109,26 +110,39 @@ class EventDetailsBody extends StatelessWidget {
                       spacing: 8,
                       children: [
                         for (var checkPoint in checkPonts)
-                          Chip(
-                            label: Text(checkPoint.name),
-                            onDeleted: provider.user.isAdmin
-                                ? () async {
-                                    try {
-                                      await provider.db.deleteCheckpoint(
-                                          checkPoint.checkpointId);
-                                      provider.notifyListeners();
-                                    } catch (e) {
-                                      // ignore: use_build_context_synchronously
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                              'Failed to delete checkpoint: $e'),
-                                        ),
-                                      );
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) {
+                                  return ScanningScreen(
+                                    checkpointModel: checkPoint,
+                                    db: provider.db,
+                                    eventModel: provider.event,
+                                  );
+                                },
+                              ));
+                            },
+                            child: Chip(
+                              label: Text(checkPoint.name),
+                              onDeleted: provider.user.isAdmin
+                                  ? () async {
+                                      try {
+                                        await provider.db.deleteCheckpoint(
+                                            checkPoint.checkpointId);
+                                        provider.notifyListeners();
+                                      } catch (e) {
+                                        // ignore: use_build_context_synchronously
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                                'Failed to delete checkpoint: $e'),
+                                          ),
+                                        );
+                                      }
                                     }
-                                  }
-                                : null,
+                                  : null,
+                            ),
                           ),
                       ],
                     );

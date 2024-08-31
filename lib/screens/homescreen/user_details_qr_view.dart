@@ -12,7 +12,7 @@ class UserDetailsQrView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var userCredString = QrParser.encodeUid(user.uid);
+    var userCredString = QrParser.encodeUid(user.uniqueCode);
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(

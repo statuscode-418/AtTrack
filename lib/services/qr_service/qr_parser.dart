@@ -19,7 +19,7 @@ class QrParser {
     }
   }
 
-  static String encodeUid(String uid) {
-    return 'v2;u;$uid';
+  static String encodeUid(String uniqueCode) {
+    return 'v2;u;$uniqueCode';
   }
 }
