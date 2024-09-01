@@ -110,22 +110,23 @@ class EventDetailsBody extends StatelessWidget {
                       spacing: 8,
                       children: [
                         for (var checkPoint in checkPonts)
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) {
-                                  return ScanningScreen(
-                                    checkpointModel: checkPoint,
-                                    db: provider.db,
-                                    eventModel: provider.event,
-                                  );
-                                },
-                              ));
-                            },
-                            child: Chip(
-                              label: Text(checkPoint.name),
-                              onDeleted: provider.user.isAdmin
-                                  ? () async {
+                          provider.user.isAdmin
+                              ? GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) {
+                                        return ScanningScreen(
+                                          checkpointModel: checkPoint,
+                                          db: provider.db,
+                                          eventModel: provider.event,
+                                        );
+                                      },
+                                    ));
+                                  },
+                                  child: Chip(
+                                    label: Text(checkPoint.name),
+                                    onDeleted: () async {
                                       try {
                                         await provider.db.deleteCheckpoint(
                                             checkPoint.checkpointId);
@@ -139,10 +140,15 @@ class EventDetailsBody extends StatelessWidget {
                                           ),
                                         );
                                       }
-                                    }
-                                  : null,
-                            ),
-                          ),
+                                    },
+                                  ),
+                                )
+                              : Chip(
+                                  label: Text(checkPoint.name),
+                                ),
+                        const SizedBox(
+                          height: 10,
+                        )
                       ],
                     );
                   }),
