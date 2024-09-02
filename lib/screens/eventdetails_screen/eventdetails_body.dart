@@ -147,7 +147,7 @@ class EventDetailsBody extends StatelessWidget {
                                   label: Text(checkPoint.name),
                                 ),
                         const SizedBox(
-                          height: 10,
+                          height: 70,
                         )
                       ],
                     );

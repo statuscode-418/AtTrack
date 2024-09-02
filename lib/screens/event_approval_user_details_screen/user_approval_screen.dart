@@ -1,6 +1,7 @@
 import 'package:attrack/models/form_submission.dart';
 import 'package:attrack/models/user_model.dart';
 import 'package:attrack/services/firestore_storage/db_model.dart';
+import 'package:attrack/utils/dialog/show_generic_dialog.dart';
 import 'package:flutter/material.dart';
 
 class UserApprovalScreen extends StatefulWidget {
@@ -18,6 +19,27 @@ class UserApprovalScreen extends StatefulWidget {
 }
 
 class _UserApprovalScreenState extends State<UserApprovalScreen> {
+  void _showDisapproveDialog() {
+    showGenericDialog(
+      context: context,
+      title: 'Disapprove User',
+      content: 'Are you sure you want to disapprove this user',
+      optionsBuilder: () => {
+        'Disapprove': true,
+        'Cancel': false,
+      },
+    ).then((value) {
+      if (value == true) {
+        var newSubmission = widget.submission.copyWith(accepted: false);
+        widget.db.updateSubmission(newSubmission).then((_) {
+          setState(() {
+            widget.submission.accepted = newSubmission.accepted;
+          });
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,11 +102,23 @@ class _UserApprovalScreenState extends State<UserApprovalScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () async {
-                  var newSubmission =
-                      widget.submission.copyWith(accepted: true);
-                  await widget.db.updateSubmission(newSubmission);
+                  if (widget.submission.accepted) {
+                    _showDisapproveDialog();
+                  } else {
+                    var newSubmission =
+                        widget.submission.copyWith(accepted: true);
+                    await widget.db.updateSubmission(newSubmission);
+                    setState(() {
+                      widget.submission.accepted = newSubmission.accepted;
+                    });
+                  }
                 },
-                child: const Text('Approval'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      widget.submission.accepted ? Colors.red : Colors.green,
+                ),
+                child:
+                    Text(widget.submission.accepted ? 'Disapprove' : 'Approve'),
               ),
             )),
           ],

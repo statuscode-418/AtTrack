@@ -8,10 +8,10 @@ class FormSubmission {
   final String eid;
 
   final DateTime submittedAt;
-  final bool accepted;
+  bool accepted;
   final List<FieldAnswer> answers;
 
-  const FormSubmission({
+  FormSubmission({
     required this.sid,
     required this.fid,
     required this.userCode,
