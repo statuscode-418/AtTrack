@@ -13,6 +13,8 @@ abstract class DBModel {
 
   Future<UserModel?> getUser(String uid);
 
+  Future<UserModel?> getUserbyUserCode(String userCode);
+
   Future<void> deleteUser(String uid);
 
   Future<UserModel> updateUser(UserModel user);

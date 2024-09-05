@@ -20,6 +20,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
+  final ValueNotifier<bool> _isPasswordVisible = ValueNotifier<bool>(true);
   final _formKey = GlobalKey<FormState>();
   final RegExp emailValid = RegExp(
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
@@ -113,41 +114,56 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(
                         height: 10,
                       ),
-                      TextFormField(
-                        controller: _passwordController,
-                        textInputAction: TextInputAction.next,
-                        obscureText: true,
-                        enableSuggestions: false,
-                        autocorrect: false,
-                        style: const TextStyle(color: Colors.white),
-                        decoration: const InputDecoration(
-                          label: Text('Password',
-                              style: TextStyle(color: Colors.white)),
-                          filled: true,
-                          fillColor: Colors.transparent,
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                            borderSide: BorderSide(
-                                color: Colors
-                                    .cyan), // Change this to your desired color
-                          ),
-                          prefixIcon: Icon(Icons.lock, color: Colors.white),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter a valid password';
-                          } else if (value.length < 6) {
-                            return "Password must be at least of 6 characters";
-                          } else {
-                            return null;
-                          }
-                        },
-                      ),
+                      ValueListenableBuilder(
+                          valueListenable: _isPasswordVisible,
+                          builder: (context, value, child) {
+                            return TextFormField(
+                              controller: _passwordController,
+                              textInputAction: TextInputAction.next,
+                              obscureText: _isPasswordVisible.value,
+                              enableSuggestions: false,
+                              autocorrect: false,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                suffixIcon: InkWell(
+                                  onTap: () => _isPasswordVisible.value =
+                                      !_isPasswordVisible.value,
+                                  child: Icon(
+                                    _isPasswordVisible.value
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                label: const Text('Password',
+                                    style: TextStyle(color: Colors.white)),
+                                filled: true,
+                                fillColor: Colors.transparent,
+                                border: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      color: Colors
+                                          .cyan), // Change this to your desired color
+                                ),
+                                prefixIcon:
+                                    const Icon(Icons.lock, color: Colors.white),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter a valid password';
+                                } else if (value.length < 6) {
+                                  return "Password must be at least of 6 characters";
+                                } else {
+                                  return null;
+                                }
+                              },
+                            );
+                          }),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [

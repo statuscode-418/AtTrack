@@ -66,6 +66,24 @@ class FirestoreDB implements DBModel {
   }
 
   @override
+  Future<UserModel?> getUserbyUserCode(String userCode) async {
+    try {
+      var query = await userCollection
+          .where(ModelConsts.uniqueCode, isEqualTo: userCode)
+          .get();
+      if (query.docs.isNotEmpty) {
+        var userDoc = query.docs.first;
+        return UserModel.fromMap(userDoc.data() as Map<String, dynamic>);
+      }
+      return null;
+    } on FirebaseException {
+      throw CouldNotGetUserException();
+    } on Exception catch (e) {
+      throw GenericDbException(e.toString());
+    }
+  }
+
+  @override
   Future<UserModel> updateUser(UserModel user) async {
     try {
       await userCollection.doc(user.uid).update(user.toMap());
