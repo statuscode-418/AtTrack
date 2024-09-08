@@ -2,10 +2,10 @@ import 'package:attrack/bloc/auth_bloc/auth_bloc.dart';
 import 'package:attrack/bloc/auth_bloc/events/auth_event_logout.dart';
 import 'package:attrack/bloc/auth_bloc/events/auth_event_show_update_user_details.dart';
 import 'package:attrack/models/user_model.dart';
-import 'package:attrack/screens/homescreen/past_events.dart';
+import 'package:attrack/screens/homescreen/past_events/past_events_view.dart';
 import 'package:attrack/screens/homescreen/notification_screen.dart';
-import 'package:attrack/screens/homescreen/upcomming_meetings_view.dart';
-import 'package:attrack/screens/homescreen/user_details_qr_view.dart';
+import 'package:attrack/screens/homescreen/upcomming_meetings/upcomming_meetings_view.dart';
+import 'package:attrack/screens/homescreen/user_details_qr/user_details_qr_view.dart';
 import 'package:attrack/services/firestore_storage/db_model.dart';
 import 'package:attrack/utils/colors.dart';
 import 'package:attrack/utils/dialog/logout_dialog.dart';
@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
         user: widget.user,
         db: widget.dbprovider,
       ),
-      PastEvents(
+      PastEventsView(
         user: widget.user,
         db: widget.dbprovider,
       ),
@@ -171,7 +171,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   backgroundImage: widget.user.photoUrl != null
                       ? NetworkImage(widget.user.photoUrl!)
                       : null,
-                  child: widget.user.photoUrl == null ? Text(widget.user.name[0]) : null,
+                  child: widget.user.photoUrl == null
+                      ? Text(widget.user.name[0])
+                      : null,
                 ),
               ),
             ],
